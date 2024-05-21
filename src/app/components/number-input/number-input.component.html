@@ -1,0 +1,29 @@
+<div class="bg-off-white p-4 rounded-[10px] w-[140px]">
+  <div class="flex justify-between items-center">
+    <p class="text-dark-navy body-1">{{ value }}</p>
+    <div class="flex flex-col gap-2">
+      <div class="cursor-pointer" (click)="increment()">
+        <small-icon
+          [icon]="arrowUpIcon"
+          [width]="15"
+          [height]="10"
+          color="#1E213F"
+          [opacity]="0.25"
+          [hoverOpacity]="1"
+          [disabled]="value == max"
+        ></small-icon>
+      </div>
+      <div class="cursor-pointer" (click)="decrement()">
+        <small-icon
+          [icon]="arrowDownIcon"
+          [width]="15"
+          [height]="10"
+          color="#1E213F"
+          [opacity]="0.25"
+          [hoverOpacity]="1"
+          [disabled]="value == min"
+        ></small-icon>
+      </div>
+    </div>
+  </div>
+</div>

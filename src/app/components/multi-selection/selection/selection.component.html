@@ -1,0 +1,9 @@
+<div
+  class="selection cursor-pointer body-1 flex items-center justify-center aspect-square px-4 rounded-full"
+  [ngClass]="{
+    selected: selected
+  }"
+  (click)="select.emit(content)"
+>
+  {{ content }}
+</div>

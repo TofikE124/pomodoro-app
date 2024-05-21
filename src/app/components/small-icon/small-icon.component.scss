@@ -1,0 +1,19 @@
+.small-icon {
+  $hover-color: current;
+
+  position: relative;
+  mask-mode: alpha;
+  mask-repeat: no-repeat;
+  mask-position: center;
+
+  transition: opacity 250ms, backgrond-color 250ms;
+
+  &:hover:not(.disabled) {
+    background-color: var(--hover-color) !important;
+    opacity: var(--hover-opacity) !important;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+}

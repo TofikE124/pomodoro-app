@@ -1,0 +1,36 @@
+@use "./variables" as *;
+
+// Mixin for small devices (up to 48rem)
+@mixin sm() {
+  @media (max-width: #{$MD_BREAKPOINT - 0.01rem}) {
+    @content;
+  }
+}
+
+// Mixin for medium devices (48rem and up)
+@mixin md() {
+  @media (min-width: #{$MD_BREAKPOINT}) and (max-width: #{$LG_BREAKPOINT - 0.01rem}) {
+    @content;
+  }
+}
+
+// Mixin for large devices (60rem and up)
+@mixin lg() {
+  @media (min-width: #{$LG_BREAKPOINT}) {
+    @content;
+  }
+}
+
+// Mixin for small and medium devices (up to 60rem)
+@mixin smmd() {
+  @media (max-width: #{$LG_BREAKPOINT - 0.01rem}) {
+    @content;
+  }
+}
+
+// Mixin for medium and large devices (48rem and up)
+@mixin lgmd() {
+  @media (min-width: #{$MD_BREAKPOINT}) {
+    @content;
+  }
+}

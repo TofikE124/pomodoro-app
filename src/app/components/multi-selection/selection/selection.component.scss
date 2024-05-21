@@ -1,0 +1,27 @@
+@use "../../../styles/absrtacts/variables" as *;
+.selection {
+  position: relative;
+  transition: background-color 300ms, color 250ms;
+
+  background-color: $OFF-WHITE;
+  &.selected {
+    background-color: $VERY-DARK-NAVY;
+    color: white;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    inset: 0px;
+    border: 2px solid $OFF-WHITE;
+    transition: inset 300ms;
+    z-index: -1;
+  }
+
+  &:hover {
+    &::after {
+      inset: -5px;
+    }
+  }
+}

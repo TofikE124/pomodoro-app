@@ -1,0 +1,9 @@
+@use "./variables" as *;
+
+.bg-off-white {
+  background-color: $OFF-WHITE;
+}
+
+.bg-very-dark-navy {
+  background-color: $VERY-DARK-NAVY;
+}

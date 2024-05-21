@@ -1,0 +1,28 @@
+@use "../../styles/absrtacts/variables" as *;
+@use "../../styles/base/typography" as *;
+
+.primary-button {
+  position: relative;
+  background-color: $DARK_RED;
+  font-size: 1rem; //16px
+  color: $WHITE;
+  padding: 1rem 3rem;
+  border-radius: 26.5px;
+  border: 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: white;
+    opacity: 0;
+    border-radius: 26.5px;
+    transition: opacity 250ms ease-out;
+  }
+
+  &:hover {
+    &::after {
+      opacity: 0.21;
+    }
+  }
+}
