@@ -1,21 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { PrimaryButtonComponent } from './components/primary-button/primary-button.component';
-import { NumberInputComponent } from './components/number-input/number-input.component';
-import { SmallIconComponent } from './components/small-icon/small-icon.component';
-import { iconMap, iconType } from './constants/icons';
-import { MultiSelectionComponent } from './components/multi-selection/multi-selection.component';
+import { TimerModeSelectorComponent } from './components/timer/timer-mode-selector/timer-mode-selector.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    PrimaryButtonComponent,
-    NumberInputComponent,
-    SmallIconComponent,
-    MultiSelectionComponent,
-  ],
+  imports: [RouterOutlet, TimerModeSelectorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

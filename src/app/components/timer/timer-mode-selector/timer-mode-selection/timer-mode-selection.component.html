@@ -1,0 +1,13 @@
+<div
+  *ngIf="mode"
+  class="w-fit px-6 py-4 rounded-[26.5px] cursor-pointer transition duration-200 ease-in"
+  [ngClass]="{
+    'bg-dark-red text-dark-navy': selected,
+    'text-light-gray-blue opacity-40 hover:opacity-100 ': !selected
+  }"
+  (click)="select.emit(value)"
+>
+  <p class="text -sm font-bold">
+    {{ mode.label }}
+  </p>
+</div>

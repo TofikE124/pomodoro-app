@@ -1,5 +1,29 @@
 @use "./variables" as *;
 
+.bg-dark-red {
+  background-color: $DARK_RED;
+}
+
+.bg-light-blue {
+  background-color: $LIGHT_BLUE;
+}
+
+.bg-light-purple {
+  background-color: $LIGHT_PURPLE;
+}
+
+.bg-light-gray-blue {
+  background-color: $LIGHT_GRAY_BLUE;
+}
+
+.bg-dark-navy {
+  background-color: $DARK_NAVY;
+}
+
+.bg-pure-white {
+  background-color: $WHITE;
+}
+
 .bg-off-white {
   background-color: $OFF-WHITE;
 }
