@@ -14,9 +14,9 @@ import { PomodoroMode } from '../../../constants/modes';
 export class TimerModeSelectorComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
-  selections = Object.values(PomodoroMode) as PomodoroMode[];
+  availableModes = Object.values(PomodoroMode) as PomodoroMode[];
 
-  selectedMode?: PomodoroMode;
+  currentMode?: PomodoroMode;
 
   onSelect(selection: PomodoroMode) {
     this.changeMode(selection);
@@ -26,7 +26,7 @@ export class TimerModeSelectorComponent implements OnInit {
     this.changeMode(PomodoroMode.POMODORO);
 
     this.route.queryParamMap.subscribe((queryParams) => {
-      this.selectedMode = queryParams.get('mode')! as PomodoroMode;
+      this.currentMode = queryParams.get('mode')! as PomodoroMode;
     });
   }
 

@@ -5,9 +5,9 @@
     'bg-dark-red text-dark-navy': selected,
     'text-light-gray-blue opacity-40 hover:opacity-100 ': !selected
   }"
-  (click)="select.emit(value)"
+  (click)="modeSelect.emit(mode)"
 >
   <p class="text -sm font-bold">
-    {{ mode.label }}
+    {{ modeDetails?.label }}
   </p>
 </div>

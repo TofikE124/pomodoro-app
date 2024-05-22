@@ -1,0 +1,29 @@
+<div
+  class="pomodoro-timer-container overflow-hidden w-[410px] h-[410px] rounded-full p-[22px]"
+>
+  <div class="relative bg-very-dark-navy rounded-full p-[13.5px] w-full h-full">
+    <div
+      class="relative z-10 flex flex-col items-center justify-center gap-5 w-full h-full"
+    >
+      <p class="h1 text-light-gray-blue">
+        {{ timeLeft$ | async | timeFormat }}
+      </p>
+      <control-button
+        (startClick)="startClick()"
+        (pauseClick)="pauseClick()"
+        (resetClick)="resetClick()"
+        (resumeClick)="resumeClick()"
+        [timerComplete$]="timerComplete"
+      ></control-button>
+    </div>
+    <div class="absolute inset-0 grid place-items-center">
+      <circular-progress-bar
+        [height]="339"
+        [width]="339"
+        [stroke-width]="11"
+        stroke-color="#F87070"
+        [progress]="(progress$ | async)!"
+      ></circular-progress-bar>
+    </div>
+  </div>
+</div>
