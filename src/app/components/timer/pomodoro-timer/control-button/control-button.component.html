@@ -1,4 +1,5 @@
 <button
+  *ngIf="currentControlButtonDetails$ | async as currentControlButtonDetails"
   class="h3 text-light-gray-blue cursor-pointer"
   (click)="currentControlButtonDetails?.onClick()"
 >

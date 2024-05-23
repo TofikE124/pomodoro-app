@@ -11,6 +11,7 @@ import { TimeFormatPipe } from '../../../pipes/time-format.pipe';
 import { TimerService } from '../../../services/timer.service';
 import { CircularProgressBarComponent } from '../../circular-progress-bar/circular-progress-bar.component';
 import { ControlButtonComponent } from './control-button/control-button.component';
+import { TimerModeService } from '../../../services/timer-mode.service';
 
 @Component({
   selector: 'pomodoro-timer',
@@ -25,48 +26,29 @@ import { ControlButtonComponent } from './control-button/control-button.componen
   styleUrl: './pomodoro-timer.component.scss',
 })
 export class PomodoroTimerComponent implements OnInit, OnDestroy {
-  currentMode?: PomodoroMode;
   currentModeDetails?: PomodoroModeDetails;
   timeLeft$?: Observable<number> = of(0);
   progress$?: Observable<number> = of(100);
   timerComplete?: EventEmitter<void>;
 
   constructor(
-    private route: ActivatedRoute,
+    private timerModeService: TimerModeService,
     private timerService: TimerService
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe((queryParams) => {
-      this.currentMode =
-        (queryParams.get('mode')! as PomodoroMode) || PomodoroMode.POMODORO;
-      this.currentModeDetails = pomodoroModeDetailsMap[this.currentMode];
-      this.timeLeft$ = of(this.currentModeDetails.duration);
-    });
-
-    this.timerComplete = this.timerService.timerComplete;
-  }
-
-  ngOnDestroy(): void {
-    this.timerService.resetTimer(this.currentModeDetails?.duration!);
-  }
-
-  startClick() {
-    this.timerService.startTimer(this.currentModeDetails?.duration!);
-    this.timeLeft$ = this.timerService.timeLeft$;
-    this.progress$ = this.timeLeft$.pipe(
-      map((timeLeft) => this.getProgress(timeLeft))
+    this.timerModeService.currentModeDetails$.subscribe(
+      (currentModeDetails) => {
+        this.currentModeDetails = currentModeDetails;
+        this.timeLeft$ = this.timerService.timeLeft$;
+        this.progress$ = this.timerService.timeLeft$.pipe(
+          map((timeLeft) => this.getProgress(timeLeft))
+        );
+      }
     );
   }
 
-  pauseClick() {
-    this.timerService.pauseTimer();
-  }
-  resumeClick() {
-    this.timerService.resumeTimer();
-  }
-
-  resetClick() {
+  ngOnDestroy(): void {
     this.timerService.resetTimer(this.currentModeDetails?.duration!);
   }
 

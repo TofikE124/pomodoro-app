@@ -8,13 +8,7 @@
       <p class="h1 text-light-gray-blue">
         {{ timeLeft$ | async | timeFormat }}
       </p>
-      <control-button
-        (startClick)="startClick()"
-        (pauseClick)="pauseClick()"
-        (resetClick)="resetClick()"
-        (resumeClick)="resumeClick()"
-        [timerComplete$]="timerComplete"
-      ></control-button>
+      <control-button></control-button>
     </div>
     <div class="absolute inset-0 grid place-items-center">
       <circular-progress-bar

@@ -1,13 +1,12 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Subscription, take, timer } from 'rxjs';
-import { CircularProgressBarComponent } from './components/circular-progress-bar/circular-progress-bar.component';
 import { PomodoroTimerComponent } from './components/timer/pomodoro-timer/pomodoro-timer.component';
+import { TimerModeSelectorComponent } from './components/timer/timer-mode-selector/timer-mode-selector.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, PomodoroTimerComponent, CircularProgressBarComponent],
+  imports: [RouterOutlet, PomodoroTimerComponent, TimerModeSelectorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
