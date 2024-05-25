@@ -1,4 +1,4 @@
-import { TimeDurationService } from './timer-duration.service';
+import { TimerDurationService } from './timer-duration.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -25,30 +25,15 @@ export class TimerService {
   timeLeft$ = this.timeLeftSubject.asObservable();
   private timerSubscription?: Subscription;
 
-  controlButtonModeSubject?: BehaviorSubject<ControlButtonMode> =
-    new BehaviorSubject<ControlButtonMode>(ControlButtonMode.START);
-  controlButtonDetailsSubject?: BehaviorSubject<ControlButtonDetails> =
-    new BehaviorSubject<ControlButtonDetails>({} as ControlButtonDetails);
-
-  currentControlButtonMode$?: Observable<ControlButtonMode> =
-    this.controlButtonModeSubject?.asObservable();
-  currentControlButtonDetails$?: Observable<ControlButtonDetails> =
-    this.controlButtonDetailsSubject?.asObservable();
-  controlButtonDetailsMap?: Record<ControlButtonMode, ControlButtonDetails>;
-
   constructor(
     private timerModeService: TimerModeService,
-    private timeDurationService: TimeDurationService
+    private timeDurationService: TimerDurationService
   ) {
     this.timerModeService.currentMode$?.subscribe((currentMode) => {
       // Get new details
       const currentModeDetails =
         this.timeDurationService.getDurations()[currentMode];
 
-      this.populateControlButtonDetailsMap(currentModeDetails);
-      this.controlButtonDetailsSubject?.next(
-        this.controlButtonDetailsMap![ControlButtonMode.START]
-      );
       this.timeLeftSubject.next(currentModeDetails?.duration);
       this.resetTimer(currentModeDetails?.duration);
     });
@@ -64,7 +49,6 @@ export class TimerService {
         const newTimeLeft = this.timeLeftSubject.value + decrement;
         if (newTimeLeft >= 0) {
           this.timeLeftSubject.next(newTimeLeft);
-          if (newTimeLeft == 0) this.timerCompleted();
         } else {
           this.clearTimer();
         }
@@ -91,50 +75,5 @@ export class TimerService {
   resumeTimer() {
     const remainingTime = this.timeLeftSubject.value;
     this.startTimer(remainingTime);
-  }
-
-  timerCompleted() {
-    this.changeControlButtonMode(ControlButtonMode.RESET);
-  }
-
-  // Button Mode Methods
-  changeControlButtonMode(controlButtonMode: ControlButtonMode) {
-    this.controlButtonModeSubject?.next(controlButtonMode);
-    this.controlButtonDetailsSubject?.next(
-      this.controlButtonDetailsMap![controlButtonMode]
-    );
-  }
-
-  populateControlButtonDetailsMap(currentModeDetails: PomodoroModeDetails) {
-    this.controlButtonDetailsMap = {
-      [ControlButtonMode.START]: {
-        label: 'start',
-        onClick: () => {
-          this.startTimer(currentModeDetails?.duration!);
-          this.changeControlButtonMode(ControlButtonMode.PAUSE);
-        },
-      },
-      [ControlButtonMode.PAUSE]: {
-        label: 'pause',
-        onClick: () => {
-          this.pauseTimer();
-          this.changeControlButtonMode(ControlButtonMode.RESUME);
-        },
-      },
-      [ControlButtonMode.RESUME]: {
-        label: 'resume',
-        onClick: () => {
-          this.resumeTimer();
-          this.changeControlButtonMode(ControlButtonMode.PAUSE);
-        },
-      },
-      [ControlButtonMode.RESET]: {
-        label: 'reset',
-        onClick: () => {
-          this.resetTimer(currentModeDetails.duration);
-          this.changeControlButtonMode(ControlButtonMode.START);
-        },
-      },
-    };
   }
 }

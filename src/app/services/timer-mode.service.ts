@@ -1,4 +1,4 @@
-import { TimeDurationService } from './timer-duration.service';
+import { TimerDurationService } from './timer-duration.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable, OnInit } from '@angular/core';
 import { PomodoroMode, PomodoroModeDetails } from '../constants/modes';
@@ -21,7 +21,7 @@ export class TimerModeService {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private timeDurationService: TimeDurationService
+    private timeDurationService: TimerDurationService
   ) {
     this.changeMode(PomodoroMode.POMODORO);
 

@@ -1,7 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { PomodoroMode, PomodoroModeDetails } from '../../../../constants/modes';
-import { TimeDurationService } from '../../../../services/timer-duration.service';
+import { TimerDurationService } from '../../../../services/timer-duration.service';
 import { NumberInputComponent } from '../../../number-input/number-input.component';
 import { map } from 'rxjs';
 
@@ -13,7 +13,7 @@ import { map } from 'rxjs';
   styleUrl: './mode-duration-settings.component.scss',
 })
 export class ModeDurationSettingsComponent {
-  constructor(private timeDurationService: TimeDurationService) {}
+  constructor(private timeDurationService: TimerDurationService) {}
 
   durations$ = this.timeDurationService.durations$;
 

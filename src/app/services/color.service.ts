@@ -53,8 +53,9 @@ export class ColorService {
   }
 
   private applyColorAsCssVariable(colorValue: string) {
-    if (this.documentExists())
+    if (this.documentExists()) {
       document.documentElement.style.setProperty('--schemeColor', colorValue);
+    }
   }
 
   private getStoredColorType(): Color | null {

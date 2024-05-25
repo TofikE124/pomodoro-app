@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ControlButtonDetails } from '../../../../services/timer.service';
-import { TimerService } from './../../../../services/timer.service';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TimerButtonService } from '../../../../services/timer-button.service';
+import { ControlButtonDetails } from '../../../../services/timer.service';
 
 @Component({
   selector: 'control-button',
@@ -12,12 +12,11 @@ import { CommonModule } from '@angular/common';
   standalone: true,
 })
 export class ControlButtonComponent implements OnInit {
-  constructor(private timerService: TimerService) {}
-
+  constructor(private timerButtonService: TimerButtonService) {}
   currentControlButtonDetails$?: Observable<ControlButtonDetails>;
 
   ngOnInit(): void {
     this.currentControlButtonDetails$ =
-      this.timerService.currentControlButtonDetails$;
+      this.timerButtonService.currentControlButtonDetails$;
   }
 }

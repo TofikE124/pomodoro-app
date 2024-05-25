@@ -9,7 +9,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class TimeDurationService {
+export class TimerDurationService {
   private durationsSubject = new BehaviorSubject<
     Record<PomodoroMode, PomodoroModeDetails>
   >(pomodoroModeDetailsMap);
