@@ -1,11 +1,9 @@
-import { Injectable, EventEmitter, OnInit } from '@angular/core';
-import { BehaviorSubject, interval, Subscription, Observable, of } from 'rxjs';
+import { TimeDurationService } from './timer-duration.service';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TimerModeService } from './timer-mode.service';
-import {
-  PomodoroModeDetails,
-  pomodoroModeDetailsMap,
-} from '../constants/modes';
+import { PomodoroModeDetails } from '../constants/modes';
 
 export enum ControlButtonMode {
   START,
@@ -38,9 +36,15 @@ export class TimerService {
     this.controlButtonDetailsSubject?.asObservable();
   controlButtonDetailsMap?: Record<ControlButtonMode, ControlButtonDetails>;
 
-  constructor(private timerModeService: TimerModeService) {
+  constructor(
+    private timerModeService: TimerModeService,
+    private timeDurationService: TimeDurationService
+  ) {
     this.timerModeService.currentMode$?.subscribe((currentMode) => {
-      const currentModeDetails = pomodoroModeDetailsMap[currentMode];
+      // Get new details
+      const currentModeDetails =
+        this.timeDurationService.getDurations()[currentMode];
+
       this.populateControlButtonDetailsMap(currentModeDetails);
       this.controlButtonDetailsSubject?.next(
         this.controlButtonDetailsMap![ControlButtonMode.START]

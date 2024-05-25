@@ -1,0 +1,11 @@
+<div
+  class="flex gap-4 items-center"
+  *ngIf="selectedFontDetails$ | async as selectedFontDetails"
+>
+  <selection
+    *ngFor="let font of avilableFonts"
+    [selection]="font"
+    [selected]="selectedFontDetails == font"
+    (select)="fontSelect($event.font!)"
+  ></selection>
+</div>

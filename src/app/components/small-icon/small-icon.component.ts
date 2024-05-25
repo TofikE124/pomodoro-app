@@ -1,6 +1,6 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { icon } from '../../constants/icons';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { icon, iconMap, IconType } from '../../constants/icons';
 
 @Component({
   selector: 'small-icon',
@@ -10,7 +10,7 @@ import { icon } from '../../constants/icons';
   styleUrl: './small-icon.component.scss',
 })
 export class SmallIconComponent implements OnInit {
-  @Input('icon') icon!: icon;
+  @Input('iconType') iconType!: IconType;
   @Input('width') width: number = 20;
   @Input('height') height: number = 20;
   @Input('color') color?: string;
@@ -19,11 +19,14 @@ export class SmallIconComponent implements OnInit {
   @Input('hoverOpacity') hoverOpacity?: number = 1;
   @Input('disabled') disabled: boolean = false;
 
+  @Output('click') click: EventEmitter<void> = new EventEmitter();
+
   backgroundColor: string = '';
 
   getStyle() {
+    const icon = iconMap[this.iconType];
     return {
-      maskImage: `url(${this.icon.URL})`,
+      maskImage: `url(${icon.URL})`,
       backgroundColor: this.backgroundColor,
       width: this.width + 'px',
       height: this.height + 'px',

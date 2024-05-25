@@ -1,9 +1,9 @@
 <div
-  *ngIf="mode"
-  class="w-fit px-6 py-4 rounded-[26.5px] cursor-pointer transition duration-200 ease-in"
+  *ngIf="mode !== undefined"
+  class="w-fit px-6 py-4 rounded-[26.5px] active:translate-y-[3px] cursor-pointer transition-[opacity,backgroundColor] duration-300 ease-in"
   [ngClass]="{
-    'bg-dark-red text-dark-navy': selected,
-    'text-light-gray-blue opacity-40 hover:opacity-100 ': !selected
+    'bg-scheme-color text-dark-navy': selected,
+    'text-light-gray-blue opacity-40 hover:opacity-100': !selected
   }"
   (click)="modeSelect.emit(mode)"
 >

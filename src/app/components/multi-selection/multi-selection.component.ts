@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SelectionComponent } from './selection/selection.component';
 import { NgFor } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Selection, SelectionComponent } from './selection/selection.component';
 
 @Component({
   selector: 'multi-selection',
@@ -10,17 +10,18 @@ import { NgFor } from '@angular/common';
   styleUrl: './multi-selection.component.scss',
 })
 export class MultiSelectionComponent implements OnInit {
-  @Input('selections') selections: string[] = [];
-  @Input('defaultSelection') defaultSelection?: string;
+  @Input('selections') selections: Selection[] = [];
+  @Input('defaultSelection') defaultSelection?: Selection;
+  @Output('select') select: EventEmitter<Selection> = new EventEmitter();
 
-  value: string = '';
+  value?: Selection;
 
-  selectionClick = (selection: string) => {
-    console.log(selection);
+  selectionClick = (selection: Selection) => {
     this.value = selection;
+    this.select.emit(selection);
   };
 
   ngOnInit(): void {
-    this.value = this.defaultSelection || '';
+    this.value = this.defaultSelection;
   }
 }

@@ -35,3 +35,7 @@
 .border-dark-red {
   border-color: $DARK_RED;
 }
+
+.bg-scheme-color {
+  background-color: var(--schemeColor);
+}

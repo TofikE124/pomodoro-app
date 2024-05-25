@@ -1,0 +1,20 @@
+<div class="flex items-center lgmd:gap-5 sm:flex-col sm:gap-2">
+  <div
+    class="flex justify-center lgmd:flex-col gap-2 sm:justify-between sm:items-center sm:w-full"
+    *ngFor="
+      let mode of durations$ | async | keyvalue;
+      let i = index;
+      trackBy: trackByFn
+    "
+  >
+    <p class="text-dark-navy text-xs font-bold opacity-40">
+      {{ mode.value.label }}
+    </p>
+    <number-input
+      (valueChange)="onDurationChange(mode.key, $event)"
+      [value]="mode.value.duration / 60"
+      [max]="999"
+      [min]="1"
+    ></number-input>
+  </div>
+</div>

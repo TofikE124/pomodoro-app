@@ -1,0 +1,50 @@
+<div
+  class="settings-panel fixed lgmd:inset-0 sm:left-6 sm:right-6 sm:top-12 sm:bottom-16 grid place-items-center z-30"
+  [ngClass]="{ opened: isSettingsOpened, closed: !isSettingsOpened }"
+>
+  <div
+    class="settings-panel-container lgmd:w-[540px] sm:w-full sm:h-full lgmd:py-[34px] sm:pt-6 sm:pb-[2px] relative bg-pure-white rounded-[25px] z-30"
+  >
+    <div
+      class="flex justify-between items-center w-full lgmd:pb-8 sm:pb-7 px-10 border-b border-solid border-[#E3E1E1]"
+    >
+      <h2 class="h2 text-very-dark-navy">Settings</h2>
+      <small-icon
+        [iconType]="closeIcon"
+        [width]="14"
+        [height]="14"
+        [opacity]="0.5"
+        [hoverOpacity]="1"
+        color="#1E213F"
+        (click)="closeClick.emit()"
+      ></small-icon>
+    </div>
+    <div class="px-10 flex-col items-center justify-center mt-7">
+      <div
+        class="pb-6 mb-6 border-b border-solid border-[#E3E1E1] sm:text-center"
+      >
+        <h4 class="h4 text-very-dark-navy mb-6">Time (Minutes)</h4>
+        <mode-duration-settings></mode-duration-settings>
+      </div>
+      <div
+        class="flex items-center justify-between sm:flex-col sm:gap-4 pb-6 mb-6 border-b border-solid border-[#E3E1E1]"
+      >
+        <h4 class="h4 text-very-dark-navy">Font</h4>
+        <multi-selection-font></multi-selection-font>
+      </div>
+      <div class="flex items-center justify-between sm:flex-col sm:gap-4 mb-11">
+        <h4 class="h4 text-very-dark-navy">Color</h4>
+        <multi-selection-color></multi-selection-color>
+      </div>
+      <div
+        class="absolute bottom-0 translate-y-[50%] left-0 right-0 flex items-center justify-center"
+      >
+        <primary-button content="Save" (click)="save()"></primary-button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="settings-panel-overlay w-full h-full absolute inset-0 bg-[rgba(10,12,28,0.5)]"
+    (click)="overlayClick.emit()"
+  ></div>
+</div>

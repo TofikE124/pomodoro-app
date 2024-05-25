@@ -2,4 +2,5 @@
   class="small-icon"
   [ngStyle]="getStyle()"
   [ngClass]="{ disabled: disabled }"
+  (click)="click.emit()"
 ></div>

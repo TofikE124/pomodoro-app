@@ -1,4 +1,11 @@
-import { Component, ContentChild, ElementRef, Input } from '@angular/core';
+import {
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'primary-button',

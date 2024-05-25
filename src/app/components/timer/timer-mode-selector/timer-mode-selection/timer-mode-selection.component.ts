@@ -1,10 +1,7 @@
+import { TimeDurationService } from './../../../../services/timer-duration.service';
 import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  pomodoroModeDetailsMap,
-  PomodoroModeDetails,
-  PomodoroMode,
-} from '../../../../constants/modes';
+import { PomodoroModeDetails, PomodoroMode } from '../../../../constants/modes';
 
 @Component({
   selector: 'timer-mode-selection',
@@ -21,7 +18,9 @@ export class TimerModeSelectionComponent implements OnInit {
 
   modeDetails?: PomodoroModeDetails;
 
+  constructor(private timeDurationService: TimeDurationService) {}
+
   ngOnInit(): void {
-    this.modeDetails = pomodoroModeDetailsMap[this.mode];
+    this.modeDetails = this.timeDurationService.getDurations()[this.mode];
   }
 }

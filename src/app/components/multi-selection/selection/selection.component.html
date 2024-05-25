@@ -1,9 +1,10 @@
 <div
-  class="selection cursor-pointer body-1 flex items-center justify-center aspect-square px-4 rounded-full"
+  class="selection cursor-pointer body-1 flex items-center justify-center aspect-square w-[40px] h-[40px] rounded-full"
   [ngClass]="{
-    selected: selected
+    selected: selected,
   }"
-  (click)="select.emit(content)"
+  [ngStyle]="{ 'font-family': selection?.font }"
+  (click)="select.emit(selection)"
 >
-  {{ content }}
+  {{ selection?.label }}
 </div>

@@ -1,0 +1,32 @@
+.settings-panel {
+  .settings-panel-container {
+    transition: opacity 250ms, scale 300ms;
+  }
+  .settings-panel-panel {
+    transition: opacity 250ms;
+  }
+
+  &.opened {
+    visibility: visible;
+    .settings-panel-container {
+      opacity: 1;
+      scale: 1;
+    }
+    .settings-panel-overlay {
+      opacity: 1;
+    }
+  }
+
+  &.closed {
+    visibility: hidden;
+    transition: visibility 0ms ease 300ms;
+    .settings-panel-container {
+      opacity: 0;
+      scale: 0;
+      transform-origin: 50% 50%;
+    }
+    .settings-panel-overlay {
+      opacity: 0;
+    }
+  }
+}

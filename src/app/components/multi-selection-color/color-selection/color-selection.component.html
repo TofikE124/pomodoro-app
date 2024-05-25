@@ -1,0 +1,18 @@
+<div
+  *ngIf="colorDetails"
+  class="selection rounded-full grid place-items-center cursor-pointer"
+  [ngStyle]="{
+    width: width ? width + 'px' : '40px',
+    height: height ? height + 'px' : '40px',
+    backgroundColor: colorDetails.value
+  }"
+  (click)="select.emit(colorDetails)"
+>
+  <small-icon
+    *ngIf="selected"
+    [width]="13"
+    [height]="9"
+    color="#161932"
+    [iconType]="checkIcon"
+  ></small-icon>
+</div>

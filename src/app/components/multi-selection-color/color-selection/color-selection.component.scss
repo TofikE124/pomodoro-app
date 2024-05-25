@@ -1,0 +1,20 @@
+@use "../../../styles/absrtacts/variables" as *;
+.selection {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    inset: 0px;
+    border: 2px solid $OFF-WHITE;
+    transition: inset 300ms;
+    z-index: -1;
+  }
+
+  &:hover {
+    &::after {
+      inset: -5px;
+    }
+  }
+}

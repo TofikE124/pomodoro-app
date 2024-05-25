@@ -1,10 +1,7 @@
+import { TimeDurationService } from './timer-duration.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable, OnInit } from '@angular/core';
-import {
-  PomodoroMode,
-  PomodoroModeDetails,
-  pomodoroModeDetailsMap,
-} from '../constants/modes';
+import { PomodoroMode, PomodoroModeDetails } from '../constants/modes';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
@@ -15,18 +12,23 @@ export class TimerModeService {
     PomodoroMode.POMODORO
   );
   private currentModeDetailsSubject = new BehaviorSubject<PomodoroModeDetails>(
-    pomodoroModeDetailsMap[PomodoroMode.POMODORO]
+    this.timeDurationService.getDurations()[PomodoroMode.POMODORO]
   );
 
   currentMode$ = this.currentModeSubject.asObservable();
   currentModeDetails$ = this.currentModeDetailsSubject.asObservable();
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private timeDurationService: TimeDurationService
+  ) {
     this.changeMode(PomodoroMode.POMODORO);
-    this.route.queryParamMap.subscribe((queryParams) => {
-      const currentMode = queryParams.get('mode')! as PomodoroMode;
-      this.currentModeSubject?.next(currentMode);
-      this.currentModeDetailsSubject?.next(pomodoroModeDetailsMap[currentMode]);
+
+    this.timeDurationService.durations$.subscribe((durations) => {
+      const currentMode = this.currentModeSubject.value;
+      this.currentModeSubject.next(currentMode);
+      this.currentModeDetailsSubject.next(durations[currentMode]);
     });
   }
 
@@ -38,5 +40,9 @@ export class TimerModeService {
       },
       queryParamsHandling: 'merge',
     });
+    this.currentModeSubject?.next(mode);
+    this.currentModeDetailsSubject?.next(
+      this.timeDurationService.getDurations()[mode]
+    );
   }
 }

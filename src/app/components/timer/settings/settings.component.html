@@ -1,0 +1,16 @@
+<div class="w-full flex justify-center items-center">
+  <small-icon
+    [width]="27"
+    [height]="27"
+    [opacity]="0.5"
+    [hoverOpacity]="1"
+    [iconType]="settingsIcon"
+    (click)="openSettings()"
+  ></small-icon>
+
+  <settings-panel
+    (overlayClick)="closeSettings()"
+    (closeClick)="closeSettings()"
+    [isSettingsOpened]="isSettingsOpen"
+  ></settings-panel>
+</div>

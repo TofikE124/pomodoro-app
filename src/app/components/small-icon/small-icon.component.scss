@@ -6,6 +6,8 @@
   mask-repeat: no-repeat;
   mask-position: center;
 
+  cursor: pointer;
+
   transition: opacity 250ms, backgrond-color 250ms;
 
   &:hover:not(.disabled) {

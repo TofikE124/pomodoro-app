@@ -1,0 +1,11 @@
+<div
+  class="flex gap-4 items-center"
+  *ngIf="selectedColorDetails$ | async as selectedColorDetails"
+>
+  <color-selection
+    *ngFor="let colorDetails of colors"
+    [colorDetails]="colorDetails"
+    (select)="selectColor($event)"
+    [selected]="selectedColorDetails == colorDetails"
+  ></color-selection>
+</div>
