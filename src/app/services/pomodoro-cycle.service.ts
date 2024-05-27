@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PomodoroMode } from '../constants/modes';
 import { SaveableService } from './settings.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class PomodoroCycleService implements SaveableService {
 
   private currentModeIndex: number = 0;
 
-  constructor() {
+  constructor(private localStorageService: LocalStorageService) {
     this.intializeLongBreakInterval();
     this.updateCycle();
   }
@@ -38,7 +39,7 @@ export class PomodoroCycleService implements SaveableService {
   }
 
   save() {
-    if (this.localStorageExists()) {
+    if (this.localStorageService.localStorageExists()) {
       this.storeLongBreakInterval(this.longBreakIntervalSubject.value);
     }
   }
@@ -50,7 +51,7 @@ export class PomodoroCycleService implements SaveableService {
   }
 
   private getStoredLongBreakInterval() {
-    if (this.localStorageExists()) {
+    if (this.localStorageService.localStorageExists()) {
       const storedLongBreakIntervals =
         localStorage.getItem('longBreakInterval');
       if (storedLongBreakIntervals) return parseInt(storedLongBreakIntervals);
@@ -63,9 +64,5 @@ export class PomodoroCycleService implements SaveableService {
       'longBreakInterval',
       JSON.stringify(longBreakInterval)
     );
-  }
-
-  private localStorageExists(): boolean {
-    return typeof localStorage !== 'undefined';
   }
 }

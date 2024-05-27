@@ -6,6 +6,7 @@ import {
   pomodoroModeDetailsMap,
 } from '../constants/modes';
 import { SaveableService } from './settings.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class TimerDurationService implements SaveableService {
   >(pomodoroModeDetailsMap);
   durations$ = this.durationsSubject.asObservable();
 
-  constructor() {
+  constructor(private localStorageService: LocalStorageService) {
     this.loadDurationsFromStorage();
   }
 
@@ -39,15 +40,11 @@ export class TimerDurationService implements SaveableService {
   }
 
   private loadDurationsFromStorage() {
-    if (this.localStorageExists()) {
+    if (this.localStorageService.localStorageExists()) {
       const storedDurations = localStorage.getItem('pomodoroDurations');
       if (storedDurations) {
         this.durationsSubject.next(JSON.parse(storedDurations));
       }
     }
-  }
-
-  private localStorageExists() {
-    return typeof localStorage !== 'undefined';
   }
 }

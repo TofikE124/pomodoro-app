@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SaveableService } from './settings.service';
+import { LocalStorageService } from './local-storage.service';
 
 export enum Color {
   DARK_RED = 'Dark Red',
@@ -29,7 +30,7 @@ export class ColorService implements SaveableService {
   selectedColorDetails$: Observable<ColorDetails> =
     this.selectedColorDetailsSubject.asObservable();
 
-  constructor() {
+  constructor(private localStorageService: LocalStorageService) {
     this.initializeSelectedColor();
   }
 
@@ -48,7 +49,7 @@ export class ColorService implements SaveableService {
 
   save() {
     const selectedColorDetails = this.selectedColorDetailsSubject.getValue();
-    if (this.localStorageExists()) {
+    if (this.localStorageService.localStorageExists()) {
       this.storeColorType(selectedColorDetails.type);
     }
   }
@@ -60,7 +61,7 @@ export class ColorService implements SaveableService {
   }
 
   private getStoredColorType(): Color | null {
-    if (this.localStorageExists()) {
+    if (this.localStorageService.localStorageExists()) {
       return localStorage.getItem('color') as Color | null;
     }
     return null;
@@ -70,9 +71,6 @@ export class ColorService implements SaveableService {
     localStorage.setItem('color', colorType);
   }
 
-  private localStorageExists(): boolean {
-    return typeof localStorage !== 'undefined';
-  }
   private documentExists(): boolean {
     return typeof document !== 'undefined';
   }
