@@ -12,8 +12,9 @@ import { ControlButtonDetails } from '../../../../services/timer.service';
   standalone: true,
 })
 export class ControlButtonComponent implements OnInit {
-  constructor(private timerButtonService: TimerButtonService) {}
   currentControlButtonDetails$?: Observable<ControlButtonDetails>;
+
+  constructor(private timerButtonService: TimerButtonService) {}
 
   ngOnInit(): void {
     this.currentControlButtonDetails$ =

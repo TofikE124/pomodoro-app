@@ -3,16 +3,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { IconType } from '../../../../constants/icons';
 import { pomodoroModeDetailsMap } from '../../../../constants/modes';
-import { ColorService } from '../../../../services/color.service';
-import { FontService } from '../../../../services/font.service';
-import { TimerDurationService } from '../../../../services/timer-duration.service';
-import { MultiSelectionColorComponent } from '../../../multi-selection-color/multi-selection-color.component';
-import { MultiSelectionFontComponent } from '../../../multi-selection-font/multi-selection-font.component';
+import { SettingsService } from '../../../../services/settings.service';
+import { MultiSelectionColorComponent } from '../multi-selection-color/multi-selection-color.component';
 import { MultiSelectionComponent } from '../../../multi-selection/multi-selection.component';
 import { NumberInputComponent } from '../../../number-input/number-input.component';
 import { PrimaryButtonComponent } from '../../../primary-button/primary-button.component';
 import { SmallIconComponent } from '../../../small-icon/small-icon.component';
 import { ModeDurationSettingsComponent } from '../mode-duration-settings/mode-duration-settings.component';
+import { MultiSelectionFontComponent } from '../multi-selection-font/multi-selection-font.component';
 
 @Component({
   selector: 'settings-panel',
@@ -24,9 +22,9 @@ import { ModeDurationSettingsComponent } from '../mode-duration-settings/mode-du
     NumberInputComponent,
     MultiSelectionComponent,
     PrimaryButtonComponent,
-    MultiSelectionColorComponent,
     MultiSelectionFontComponent,
     ModeDurationSettingsComponent,
+    MultiSelectionColorComponent,
   ],
   templateUrl: './settings-panel.component.html',
   styleUrl: './settings-panel.component.scss',
@@ -37,9 +35,7 @@ export class SettingsPanelComponent {
   @Output('closeClick') closeClick: EventEmitter<void> = new EventEmitter();
 
   constructor(
-    private fontService: FontService,
-    private colorService: ColorService,
-    private timeDurationService: TimerDurationService,
+    private settingsService: SettingsService,
     private toastr: ToastrService
   ) {}
 
@@ -48,9 +44,7 @@ export class SettingsPanelComponent {
   pomodoroModeDetailsMapValues = Object.values(pomodoroModeDetailsMap);
 
   save() {
-    this.fontService.save();
-    this.colorService.save();
-    this.timeDurationService.save();
+    this.settingsService.save();
     this.toastr.success('Saved Successfully', 'Saved', { timeOut: 1500 });
     this.closeClick.emit();
   }

@@ -1,5 +1,5 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PomodoroMode } from '../../../constants/modes';
 import { TimerModeService } from './../../../services/timer-mode.service';
@@ -12,7 +12,7 @@ import { TimerModeSelectionComponent } from './timer-mode-selection/timer-mode-s
   templateUrl: './timer-mode-selector.component.html',
   styleUrl: './timer-mode-selector.component.scss',
 })
-export class TimerModeSelectorComponent implements OnInit {
+export class TimerModeSelectorComponent implements OnInit, OnDestroy {
   availableModes = Object.values(PomodoroMode) as PomodoroMode[];
   currentMode?: PomodoroMode;
   currentModeSubscription?: Subscription;
@@ -24,6 +24,10 @@ export class TimerModeSelectorComponent implements OnInit {
       this.timerModeService.currentMode$?.subscribe((currentMode) => {
         this.currentMode = currentMode;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.currentModeSubscription?.unsubscribe();
   }
 
   onSelect(selection: PomodoroMode) {

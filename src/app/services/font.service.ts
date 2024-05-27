@@ -1,6 +1,7 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Selection } from '../components/multi-selection/selection/selection.component';
+import { SaveableService } from './settings.service';
 
 export enum Font {
   KUMBH_SANS = 'Kumbh Sans',
@@ -11,7 +12,7 @@ export enum Font {
 @Injectable({
   providedIn: 'root',
 })
-export class FontService {
+export class FontService implements SaveableService {
   private fontDetailsSubject: BehaviorSubject<Selection>;
   fontDetails$: Observable<Selection>;
 

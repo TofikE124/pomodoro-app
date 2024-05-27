@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { SaveableService } from './settings.service';
 
 export enum Color {
   DARK_RED = 'Dark Red',
@@ -15,7 +16,7 @@ export interface ColorDetails {
 @Injectable({
   providedIn: 'root',
 })
-export class ColorService {
+export class ColorService implements SaveableService {
   colors: Record<Color, ColorDetails> = {
     [Color.DARK_RED]: { value: '#F87070', type: Color.DARK_RED },
     [Color.LIGHT_BLUE]: { value: '#70F3F8', type: Color.LIGHT_BLUE },

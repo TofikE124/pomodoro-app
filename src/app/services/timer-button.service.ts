@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TimerModeService } from './timer-mode.service';
 import {
-  ControlButtonMode,
   ControlButtonDetails,
+  ControlButtonMode,
   TimerService,
 } from './timer.service';
-import { PomodoroModeDetails } from '../constants/modes';
-import { TimerModeService } from './timer-mode.service';
-import { TimerDurationService } from './timer-duration.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TimerButtonService {
-  controlButtonModeSubject?: BehaviorSubject<ControlButtonMode> =
+  private controlButtonModeSubject?: BehaviorSubject<ControlButtonMode> =
     new BehaviorSubject<ControlButtonMode>(ControlButtonMode.START);
   controlButtonDetailsSubject?: BehaviorSubject<ControlButtonDetails> =
     new BehaviorSubject<ControlButtonDetails>({} as ControlButtonDetails);
@@ -26,21 +24,18 @@ export class TimerButtonService {
 
   constructor(
     private timerService: TimerService,
-    timerModeService: TimerModeService,
-    timerDurationService: TimerDurationService
+    timerModeService: TimerModeService
   ) {
+    this.populateControlButtonDetailsMap();
     timerService.timeLeft$.subscribe((timeLeft) => {
       if (!timeLeft) this.changeControlButtonMode(ControlButtonMode.RESET);
     });
 
-    timerModeService.currentMode$.subscribe((mode) => {
-      const currentModeDetails = timerDurationService.getDurations()[mode];
-      this.populateControlButtonDetailsMap(currentModeDetails);
+    timerModeService.currentMode$.subscribe(() => {
       this.changeControlButtonMode(ControlButtonMode.START);
     });
   }
 
-  // Button Mode Methods
   changeControlButtonMode(controlButtonMode: ControlButtonMode) {
     this.controlButtonModeSubject?.next(controlButtonMode);
     this.controlButtonDetailsSubject?.next(
@@ -48,12 +43,12 @@ export class TimerButtonService {
     );
   }
 
-  populateControlButtonDetailsMap(currentModeDetails: PomodoroModeDetails) {
+  private populateControlButtonDetailsMap() {
     this.controlButtonDetailsMap = {
       [ControlButtonMode.START]: {
         label: 'start',
         onClick: () => {
-          this.timerService.startTimer(currentModeDetails?.duration!);
+          this.timerService.startTimer();
           this.changeControlButtonMode(ControlButtonMode.PAUSE);
         },
       },
@@ -74,7 +69,7 @@ export class TimerButtonService {
       [ControlButtonMode.RESET]: {
         label: 'reset',
         onClick: () => {
-          this.timerService.resetTimer(currentModeDetails.duration);
+          this.timerService.resetTimer();
           this.changeControlButtonMode(ControlButtonMode.START);
         },
       },

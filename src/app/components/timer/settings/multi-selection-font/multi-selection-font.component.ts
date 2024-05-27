@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { Font, FontService } from '../../services/font.service';
+import { Font, FontService } from '../../../../services/font.service';
 import {
   Selection,
   SelectionComponent,
-} from '../multi-selection/selection/selection.component';
+} from '../../../multi-selection/selection/selection.component';
 
 @Component({
   selector: 'multi-selection-font',

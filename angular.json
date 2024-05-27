@@ -30,6 +30,9 @@
             "prerender": true,
             "ssr": {
               "entry": "server.ts"
+            },
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/app/styles"]
             }
           },
           "configurations": {

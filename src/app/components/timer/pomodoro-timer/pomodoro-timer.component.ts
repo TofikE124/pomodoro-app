@@ -26,7 +26,6 @@ import { TimerModeService } from '../../../services/timer-mode.service';
   styleUrl: './pomodoro-timer.component.scss',
 })
 export class PomodoroTimerComponent implements OnInit, OnDestroy {
-  currentModeDetails?: PomodoroModeDetails;
   timeLeft$?: Observable<number> = of(0);
   progress$?: Observable<number> = of(100);
   timerComplete?: EventEmitter<void>;
@@ -39,25 +38,13 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.timerModeService.currentModeDetails$.subscribe(
       (currentModeDetails) => {
-        this.currentModeDetails = currentModeDetails;
         this.timeLeft$ = this.timerService.timeLeft$;
-        this.progress$ = this.timerService.timeLeft$.pipe(
-          map((timeLeft) => this.getProgress(timeLeft))
-        );
+        this.progress$ = this.timerService.progress$;
       }
     );
   }
 
   ngOnDestroy(): void {
-    this.timerService.resetTimer(this.currentModeDetails?.duration!);
-  }
-
-  getProgress(timeLeft: number) {
-    const progress =
-      100 -
-      ((this.currentModeDetails?.duration! - timeLeft) /
-        this.currentModeDetails?.duration!) *
-        100;
-    return progress;
+    this.timerService.resetTimer();
   }
 }

@@ -5,11 +5,12 @@ import {
   PomodoroModeDetails,
   pomodoroModeDetailsMap,
 } from '../constants/modes';
+import { SaveableService } from './settings.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TimerDurationService {
+export class TimerDurationService implements SaveableService {
   private durationsSubject = new BehaviorSubject<
     Record<PomodoroMode, PomodoroModeDetails>
   >(pomodoroModeDetailsMap);
@@ -19,7 +20,7 @@ export class TimerDurationService {
     this.loadDurationsFromStorage();
   }
 
-  getDurations(): Record<PomodoroMode, PomodoroModeDetails> {
+  getDetails(): Record<PomodoroMode, PomodoroModeDetails> {
     return this.durationsSubject.value;
   }
 

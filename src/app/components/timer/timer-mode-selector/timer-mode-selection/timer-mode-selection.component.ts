@@ -21,6 +21,6 @@ export class TimerModeSelectionComponent implements OnInit {
   constructor(private timeDurationService: TimerDurationService) {}
 
   ngOnInit(): void {
-    this.modeDetails = this.timeDurationService.getDurations()[this.mode];
+    this.modeDetails = this.timeDurationService.getDetails()[this.mode];
   }
 }

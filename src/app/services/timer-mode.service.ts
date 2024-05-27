@@ -12,7 +12,7 @@ export class TimerModeService {
     PomodoroMode.POMODORO
   );
   private currentModeDetailsSubject = new BehaviorSubject<PomodoroModeDetails>(
-    this.timeDurationService.getDurations()[PomodoroMode.POMODORO]
+    this.timeDurationService.getDetails()[PomodoroMode.POMODORO]
   );
 
   currentMode$ = this.currentModeSubject.asObservable();
@@ -42,7 +42,11 @@ export class TimerModeService {
     });
     this.currentModeSubject?.next(mode);
     this.currentModeDetailsSubject?.next(
-      this.timeDurationService.getDurations()[mode]
+      this.timeDurationService.getDetails()[mode]
     );
+  }
+
+  nextMode() {
+    this.changeMode(PomodoroMode.SHORT_BREAK);
   }
 }

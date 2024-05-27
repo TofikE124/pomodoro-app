@@ -1,9 +1,8 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ColorService } from '../../services/color.service';
-import { ColorDetails } from './../../services/color.service';
 import { ColorSelectionComponent } from './color-selection/color-selection.component';
+import { ColorDetails, ColorService } from '../../../../services/color.service';
 
 @Component({
   selector: 'multi-selection-color',
