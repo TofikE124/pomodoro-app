@@ -1,4 +1,4 @@
-@use "../../../styles/absrtacts/variables" as *;
+@use "absrtacts/variables" as *;
 .selection {
   position: relative;
   transition: background-color 300ms, color 250ms;

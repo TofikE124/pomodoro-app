@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable, OnInit } from '@angular/core';
 import { PomodoroMode, PomodoroModeDetails } from '../constants/modes';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PomodoroCycleService } from './pomodoro-cycle.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,8 @@ export class TimerModeService {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private timeDurationService: TimerDurationService
+    private timeDurationService: TimerDurationService,
+    private pomodoroCycleService: PomodoroCycleService
   ) {
     this.changeMode(PomodoroMode.POMODORO);
 
@@ -47,6 +49,6 @@ export class TimerModeService {
   }
 
   nextMode() {
-    this.changeMode(PomodoroMode.SHORT_BREAK);
+    this.changeMode(this.pomodoroCycleService.getNextMode());
   }
 }

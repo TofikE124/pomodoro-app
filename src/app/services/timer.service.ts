@@ -87,11 +87,15 @@ export class TimerService {
             this.getProgress(newTimeLeft, this.fullDuration)
           );
 
-          if (newTimeLeft == 0) this.timerModeService.nextMode();
+          if (newTimeLeft == 0) this.timerCompleted();
         } else {
           this.clearTimer();
         }
       });
+  }
+
+  private timerCompleted() {
+    this.timerModeService.nextMode();
   }
 
   private getProgress(timeLeft: number, totalTime: number) {

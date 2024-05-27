@@ -10,10 +10,10 @@ export type PomodoroModeDetails = {
 
 export const pomodoroModeDetailsMap: Record<PomodoroMode, PomodoroModeDetails> =
   {
-    [PomodoroMode.POMODORO]: { label: 'Pomodoro', duration: 4 },
+    [PomodoroMode.POMODORO]: { label: 'Pomodoro', duration: 2 },
     [PomodoroMode.SHORT_BREAK]: {
       label: 'Short Break',
-      duration: 300,
+      duration: 2,
     },
-    [PomodoroMode.LONG_BREAK]: { label: 'Long Break', duration: 900 },
+    [PomodoroMode.LONG_BREAK]: { label: 'Long Break', duration: 2 },
   };
