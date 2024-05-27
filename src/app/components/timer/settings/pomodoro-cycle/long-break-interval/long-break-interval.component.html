@@ -1,0 +1,8 @@
+<div class="flex justify-between items-center">
+  <p class="text-dark-navy text-xs font-bold opacity-40">Long Break Interval</p>
+  <number-input
+    [min]="1"
+    [value]="(longBreakInterval$ | async) || 1"
+    (valueChange)="valueChanges($event)"
+  ></number-input>
+</div>

@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TimerModeService } from './timer-mode.service';
-import { PomodoroModeDetails } from '../constants/modes';
+import { PomodoroMode, PomodoroModeDetails } from '../constants/modes';
+import { PomodoroCycleService } from './pomodoro-cycle.service';
 
-export enum ControlButtonMode {
-  START,
-  PAUSE,
-  RESUME,
-  RESET,
+export enum TimerState {
+  IDLE,
+  RUNNING,
+  PAUSED,
+  COMPLETED,
 }
 
 export type ControlButtonDetails = {
@@ -23,15 +24,20 @@ export type ControlButtonDetails = {
 export class TimerService {
   private progressSubject = new BehaviorSubject<number>(0);
   private timeLeftSubject = new BehaviorSubject<number>(0);
-  private timerSubscription?: Subscription;
-  private fullDuration: number = 0;
+  private timerStateSubject = new BehaviorSubject<TimerState>(TimerState.IDLE);
 
   timeLeft$ = this.timeLeftSubject.asObservable();
   progress$ = this.progressSubject.asObservable();
+  timerState$: Observable<TimerState> = this.timerStateSubject.asObservable();
+
+  private timerSubscription?: Subscription;
+  private currentModeDetails?: PomodoroModeDetails;
+  private fullDuration: number = 0;
 
   constructor(
     private timerModeService: TimerModeService,
-    private timeDurationService: TimerDurationService
+    private timeDurationService: TimerDurationService,
+    private pomodoroCycleService: PomodoroCycleService
   ) {
     // Intialize Timer
     this.timerModeService.currentMode$?.subscribe((currentMode) => {
@@ -39,6 +45,7 @@ export class TimerService {
       const currentModeDetails =
         this.timeDurationService.getDetails()[currentMode];
 
+      this.currentModeDetails = currentModeDetails;
       this.fullDuration = currentModeDetails.duration;
       this.timeLeftSubject.next(currentModeDetails?.duration);
       this.progressSubject.next(100);
@@ -48,6 +55,7 @@ export class TimerService {
 
   // Timer Methods
   startTimer(duration?: number) {
+    this.timerStateSubject.next(TimerState.RUNNING);
     const currentDuration = duration || this.fullDuration;
     this.clearTimer();
     this.timeLeftSubject.next(currentDuration);
@@ -63,16 +71,17 @@ export class TimerService {
   }
 
   resetTimer() {
+    this.timerStateSubject.next(TimerState.IDLE);
     this.clearTimer();
-    this.startTimer();
-    this.pauseTimer();
   }
 
   pauseTimer() {
+    this.timerStateSubject.next(TimerState.PAUSED);
     this.clearTimer();
   }
 
   resumeTimer() {
+    this.timerStateSubject.next(TimerState.RUNNING);
     this.startCounting();
   }
 
@@ -95,7 +104,25 @@ export class TimerService {
   }
 
   private timerCompleted() {
+    this.timerStateSubject.next(TimerState.COMPLETED);
     this.timerModeService.nextMode();
+    this.checkStartTimer();
+  }
+
+  private checkStartTimer() {
+    console.log(
+      this.currentModeDetails,
+      this.pomodoroCycleService.getAutoStartBreaks()
+    );
+    if (this.currentModeDetails?.isBreak) {
+      if (this.pomodoroCycleService.getAutoStartBreaks()) {
+        this.startTimer();
+      }
+    } else {
+      if (this.pomodoroCycleService.getAutoStartPomodoros()) {
+        this.startTimer();
+      }
+    }
   }
 
   private getProgress(timeLeft: number, totalTime: number) {

@@ -11,6 +11,7 @@ import { PrimaryButtonComponent } from '../../../primary-button/primary-button.c
 import { SmallIconComponent } from '../../../small-icon/small-icon.component';
 import { ModeDurationSettingsComponent } from '../mode-duration-settings/mode-duration-settings.component';
 import { MultiSelectionFontComponent } from '../multi-selection-font/multi-selection-font.component';
+import { PomodoroCycleComponent } from '../pomodoro-cycle/pomodoro-cycle.component';
 
 @Component({
   selector: 'settings-panel',
@@ -25,6 +26,7 @@ import { MultiSelectionFontComponent } from '../multi-selection-font/multi-selec
     MultiSelectionFontComponent,
     ModeDurationSettingsComponent,
     MultiSelectionColorComponent,
+    PomodoroCycleComponent,
   ],
   templateUrl: './settings-panel.component.html',
   styleUrl: './settings-panel.component.scss',

@@ -1,0 +1,9 @@
+<div class="flex justify-between items-center">
+  <p class="text-dark-navy text-xs font-bold opacity-40">
+    Auto Start Pomodoros
+  </p>
+  <swtich
+    [value]="(autoStartPomodoros$ | async) ?? false"
+    (valueChanges)="valueChanges($event)"
+  ></swtich>
+</div>

@@ -13,7 +13,7 @@ import { SettingsPanelComponent } from './settings-panel/settings-panel.componen
 export class SettingsComponent {
   settingsIcon = IconType.SETTINGS;
 
-  isSettingsOpen = false;
+  isSettingsOpen = true;
   openSettings() {
     this.isSettingsOpen = true;
   }

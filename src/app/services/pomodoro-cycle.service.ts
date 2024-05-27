@@ -1,28 +1,40 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { PomodoroMode } from '../constants/modes';
 import { SaveableService } from './settings.service';
 import { LocalStorageService } from './local-storage.service';
+
+export interface PomodoroCycle {
+  autoStartBreaks: boolean;
+  autoStartPomodoros: boolean;
+  longBreakInterval: number;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class PomodoroCycleService implements SaveableService {
-  private longBreakIntervalSubject = new BehaviorSubject<number>(2);
-  private cycle: PomodoroMode[] = [];
+  private cycleSubject = new BehaviorSubject<PomodoroCycle>({
+    autoStartBreaks: false,
+    autoStartPomodoros: false,
+    longBreakInterval: 4,
+  });
 
+  private cycle: PomodoroMode[] = [];
   private currentModeIndex: number = 0;
 
+  cycle$: Observable<PomodoroCycle> = this.cycleSubject.asObservable();
+
   constructor(private localStorageService: LocalStorageService) {
-    this.intializeLongBreakInterval();
+    this.initializeCycle();
     this.updateCycle();
   }
 
   private updateCycle() {
-    const cycleLength = this.longBreakIntervalSubject.value;
+    const { longBreakInterval } = this.cycleSubject.value;
     this.cycle = [];
 
-    for (let i = 0; i < cycleLength - 1; i++) {
+    for (let i = 0; i < longBreakInterval - 1; i++) {
       this.cycle.push(PomodoroMode.POMODORO, PomodoroMode.SHORT_BREAK);
     }
     this.cycle.push(PomodoroMode.POMODORO, PomodoroMode.LONG_BREAK);
@@ -34,35 +46,53 @@ export class PomodoroCycleService implements SaveableService {
   }
 
   setLongBreakInterval(length: number) {
-    this.longBreakIntervalSubject.next(length);
+    const currentCycle = this.cycleSubject.value;
+    this.cycleSubject.next({ ...currentCycle, longBreakInterval: length });
     this.updateCycle();
+  }
+
+  setAutoStartPomodoros(autoStartPomodoros: boolean) {
+    const currentCycle = this.cycleSubject.value;
+    this.cycleSubject.next({ ...currentCycle, autoStartPomodoros });
+  }
+
+  setAutoStartBreaks(autoStartBreaks: boolean) {
+    const currentCycle = this.cycleSubject.value;
+    this.cycleSubject.next({ ...currentCycle, autoStartBreaks });
+  }
+
+  getAutoStartPomodoros() {
+    return this.cycleSubject.value.autoStartPomodoros;
+  }
+  getAutoStartBreaks() {
+    return this.cycleSubject.value.autoStartBreaks;
   }
 
   save() {
     if (this.localStorageService.localStorageExists()) {
-      this.storeLongBreakInterval(this.longBreakIntervalSubject.value);
+      this.storeCycle(this.cycleSubject.value);
     }
   }
 
-  private intializeLongBreakInterval() {
-    const storedLongBreakInterval = this.getStoredLongBreakInterval();
-    const intialLongBreakInterval = storedLongBreakInterval ?? 4;
-    this.longBreakIntervalSubject.next(intialLongBreakInterval);
+  private initializeCycle() {
+    const storedCycle = this.getStoredCycle();
+    const initialCycle = storedCycle ?? {
+      autoStartBreaks: false,
+      autoStartPomodoros: false,
+      longBreakInterval: 4,
+    };
+    this.cycleSubject.next(initialCycle);
   }
 
-  private getStoredLongBreakInterval() {
+  private getStoredCycle() {
     if (this.localStorageService.localStorageExists()) {
-      const storedLongBreakIntervals =
-        localStorage.getItem('longBreakInterval');
-      if (storedLongBreakIntervals) return parseInt(storedLongBreakIntervals);
+      const storedCycle = localStorage.getItem('pomodoroCycle');
+      if (storedCycle) return JSON.parse(storedCycle) as PomodoroCycle;
     }
     return null;
   }
 
-  private storeLongBreakInterval(longBreakInterval: number) {
-    localStorage.setItem(
-      'longBreakInterval',
-      JSON.stringify(longBreakInterval)
-    );
+  private storeCycle(cycle: PomodoroCycle) {
+    localStorage.setItem('pomodoroCycle', JSON.stringify(cycle));
   }
 }

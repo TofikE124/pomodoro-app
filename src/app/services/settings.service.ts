@@ -44,6 +44,13 @@ export class SettingsService {
     this.pomodoroCycleService.setLongBreakInterval(longBreakInterval);
   }
 
+  setAutoStartPomodoros(autoStart: boolean) {
+    this.pomodoroCycleService.setAutoStartPomodoros(autoStart);
+  }
+  setAutoStartBreaks(autoStart: boolean) {
+    this.pomodoroCycleService.setAutoStartBreaks(autoStart);
+  }
+
   save() {
     this.servicesToSave.forEach((service) => service.save());
   }
