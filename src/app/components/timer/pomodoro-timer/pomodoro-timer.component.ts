@@ -8,10 +8,11 @@ import {
   pomodoroModeDetailsMap,
 } from '../../../constants/modes';
 import { TimeFormatPipe } from '../../../pipes/time-format.pipe';
-import { TimerService } from '../../../services/timer.service';
+import { TimerService, TimerState } from '../../../services/timer.service';
 import { CircularProgressBarComponent } from '../../circular-progress-bar/circular-progress-bar.component';
 import { ControlButtonComponent } from './control-button/control-button.component';
 import { TimerModeService } from '../../../services/timer-mode.service';
+import { SkipButtonComponent } from './skip-button/skip-button.component';
 
 @Component({
   selector: 'pomodoro-timer',
@@ -21,6 +22,7 @@ import { TimerModeService } from '../../../services/timer-mode.service';
     TimeFormatPipe,
     CommonModule,
     ControlButtonComponent,
+    SkipButtonComponent,
   ],
   templateUrl: './pomodoro-timer.component.html',
   styleUrl: './pomodoro-timer.component.scss',
@@ -28,6 +30,10 @@ import { TimerModeService } from '../../../services/timer-mode.service';
 export class PomodoroTimerComponent implements OnInit, OnDestroy {
   timeLeft$?: Observable<number> = of(0);
   progress$?: Observable<number> = of(100);
+  timerState$?: Observable<TimerState>;
+
+  timerStateRunning = TimerState.RUNNING;
+
   timerComplete?: EventEmitter<void>;
 
   constructor(
@@ -40,6 +46,7 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
       (currentModeDetails) => {
         this.timeLeft$ = this.timerService.timeLeft$;
         this.progress$ = this.timerService.progress$;
+        this.timerState$ = this.timerService.timerState$;
       }
     );
   }

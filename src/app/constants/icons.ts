@@ -9,6 +9,7 @@ export enum IconType {
   SETTINGS,
   LOGO,
   CHECK,
+  NEXT,
 }
 
 export const iconMap: Record<IconType, icon> = {
@@ -17,5 +18,6 @@ export const iconMap: Record<IconType, icon> = {
   [IconType.CLOSE]: { URL: '/assets/images/icon-close.svg' },
   [IconType.SETTINGS]: { URL: '/assets/images/icon-settings.svg' },
   [IconType.CHECK]: { URL: '/assets/images/icon-check.svg' },
+  [IconType.NEXT]: { URL: '/assets/images/icon-next.svg' },
   [IconType.LOGO]: { URL: '/assets/images/logo.svg' },
 };

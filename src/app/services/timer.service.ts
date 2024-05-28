@@ -1,16 +1,16 @@
-import { TimerDurationService } from './timer-duration.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TimerModeService } from './timer-mode.service';
-import { PomodoroMode, PomodoroModeDetails } from '../constants/modes';
+import { PomodoroModeDetails } from '../constants/modes';
 import { PomodoroCycleService } from './pomodoro-cycle.service';
+import { TimerDurationService } from './timer-duration.service';
+import { TimerModeService } from './timer-mode.service';
 
 export enum TimerState {
-  IDLE,
-  RUNNING,
-  PAUSED,
-  COMPLETED,
+  IDLE = 'Idle',
+  RUNNING = 'Running',
+  PAUSED = 'Paused',
+  COMPLETED = 'Completed',
 }
 
 export type ControlButtonDetails = {
