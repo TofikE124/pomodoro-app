@@ -110,10 +110,6 @@ export class TimerService {
   }
 
   private checkStartTimer() {
-    console.log(
-      this.currentModeDetails,
-      this.pomodoroCycleService.getAutoStartBreaks()
-    );
     if (this.currentModeDetails?.isBreak) {
       if (this.pomodoroCycleService.getAutoStartBreaks()) {
         this.startTimer();

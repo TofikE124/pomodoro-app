@@ -27,14 +27,16 @@ export class ControlButtonComponent implements OnInit, OnDestroy {
         (currentButtonDetails) =>
           (this.currentControlButtonDetails = currentButtonDetails)
       );
-    this.keyboardService.register(' ', () => this.onClick());
+    this.keyboardService.register(' ', () =>
+      this.currentControlButtonDetails?.onClick()
+    );
   }
 
   ngOnDestroy(): void {
     this.currentButtonDetialsSubscription?.unsubscribe();
   }
 
-  onClick() {
-    this.currentControlButtonDetails?.onClick();
+  onClick(event: any) {
+    if (event.pointerType) this.currentControlButtonDetails?.onClick();
   }
 }

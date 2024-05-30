@@ -1,0 +1,27 @@
+<div class="relative" [ngClass]="small ? 'w-[100px]' : 'w-[200px]'">
+  <div
+    class="bg-off-white flex justify-between w-full py-4 px-6 rounded-[5px] shadow-[0px_2px_9px_0px_rgba(0, 0, 0, 0.05)] cursor-pointer z-20 relative"
+    (click)="toggleDropdown()"
+  >
+    <p class="caption text-dark">{{ value || placeholder }}</p>
+
+    <img
+      [src]="
+        false
+          ? '/assets/images/DownArrow-Dark.svg'
+          : '/assets/images/DownArrow-Light.svg'
+      "
+    />
+  </div>
+  <div
+    class="drop-down-options-container flex flex-col overflow-hidden absolute w-full top-[57px] left-0 rounded-[5px] bg-off-white shadow-[0px_2px_9px_0px_rgba(0, 0, 0, 0.05)] z-50"
+    [ngClass]="{ opened: isOpened }"
+  >
+    <dropdown-option
+      *ngFor="let option of options"
+      [value]="option.value"
+      (optionClicked)="optionClicked($event)"
+      >{{ option.label }}</dropdown-option
+    >
+  </div>
+</div>

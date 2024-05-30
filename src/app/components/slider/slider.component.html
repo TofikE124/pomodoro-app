@@ -1,0 +1,10 @@
+<input
+  type="range"
+  [min]="min"
+  [max]="max"
+  [value]="value"
+  class="slider"
+  name="input"
+  [(ngModel)]="value"
+  (input)="handleChange($event)"
+/>

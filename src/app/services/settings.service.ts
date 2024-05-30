@@ -1,9 +1,12 @@
+import { ClockTickingType, SoundDetails } from './../constants/sounds';
 import { Injectable } from '@angular/core';
-import { ColorDetails, ColorService } from './color.service';
 import { Font, FontService } from './font.service';
 import { TimerDurationService } from './timer-duration.service';
 import { PomodoroMode } from '../constants/modes';
 import { PomodoroCycleService } from './pomodoro-cycle.service';
+import { ColorDetails } from '../constants/colors';
+import { ColorService } from './color.service';
+import { ClockTickingSoundService } from './audio/clock-ticking-sound.service';
 
 export interface SaveableService {
   save: () => void;
@@ -19,13 +22,15 @@ export class SettingsService {
     private colorService: ColorService,
     private fontService: FontService,
     private timerDurationService: TimerDurationService,
-    private pomodoroCycleService: PomodoroCycleService
+    private pomodoroCycleService: PomodoroCycleService,
+    private clockTickingSoundService: ClockTickingSoundService
   ) {
     this.servicesToSave = [
       colorService,
       fontService,
       timerDurationService,
       pomodoroCycleService,
+      clockTickingSoundService,
     ];
   }
 
@@ -49,6 +54,13 @@ export class SettingsService {
   }
   setAutoStartBreaks(autoStart: boolean) {
     this.pomodoroCycleService.setAutoStartBreaks(autoStart);
+  }
+
+  setTickingSound(tickingType: ClockTickingType) {
+    this.clockTickingSoundService.setSound(tickingType);
+  }
+  setTickingSoundVolume(volume: number) {
+    this.clockTickingSoundService.setVolume(volume);
   }
 
   save() {

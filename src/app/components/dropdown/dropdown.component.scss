@@ -1,0 +1,12 @@
+.drop-down-options-container {
+  translate: 0 -20px;
+  opacity: 0;
+  transition: translate 250ms ease-in, opacity 200ms ease-out;
+  pointer-events: none;
+
+  &.opened {
+    translate: 0 0;
+    opacity: 1;
+    pointer-events: all;
+  }
+}

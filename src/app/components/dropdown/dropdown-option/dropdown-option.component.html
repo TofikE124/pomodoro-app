@@ -1,0 +1,9 @@
+<div
+  class="drop-down-option px-6 py-2 cursor-pointer"
+  [ngClass]="{ active: active }"
+  (click)="onOptionClick()"
+>
+  <p class="caption text-dark">
+    <ng-content></ng-content>
+  </p>
+</div>

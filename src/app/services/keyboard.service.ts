@@ -21,7 +21,6 @@ export class KeyboardService {
     if (!this.windowExists()) return;
     window.addEventListener('keydown', (event) => {
       const callback = this.keyMap[event.key as Key];
-      console.log(event.key);
       if (callback) {
         callback();
       }

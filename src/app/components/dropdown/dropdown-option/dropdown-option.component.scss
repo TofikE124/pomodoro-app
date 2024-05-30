@@ -1,0 +1,22 @@
+// @use "../../../app/styles/base/utilities" as *;
+// @use "../../../app/styles/base/typography" as *;
+
+// .drop-down-option {
+//   transition: background-color 250ms;
+//   p {
+//     transition: color 300ms;
+//   }
+//   &:hover {
+//     @extend .bg-dark;
+//     p {
+//       @extend .text-white;
+//     }
+//   }
+
+//   &.active {
+//     @extend .bg-dark;
+//     p {
+//       @extend .text-white;
+//     }
+//   }
+// }

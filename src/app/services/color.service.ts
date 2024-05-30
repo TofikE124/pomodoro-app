@@ -2,28 +2,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SaveableService } from './settings.service';
 import { LocalStorageService } from './local-storage.service';
-
-export enum Color {
-  DARK_RED = 'Dark Red',
-  LIGHT_BLUE = 'Light Blue',
-  LIGHT_PURPLE = 'Light Purple',
-}
-
-export interface ColorDetails {
-  value: string;
-  type: Color;
-}
+import { ColorDetails, Color, colors } from '../constants/colors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ColorService implements SaveableService {
-  colors: Record<Color, ColorDetails> = {
-    [Color.DARK_RED]: { value: '#F87070', type: Color.DARK_RED },
-    [Color.LIGHT_BLUE]: { value: '#70F3F8', type: Color.LIGHT_BLUE },
-    [Color.LIGHT_PURPLE]: { value: '#D881F8', type: Color.LIGHT_PURPLE },
-  };
-
+  colors: Record<Color, ColorDetails> = colors;
   private selectedColorDetailsSubject = new BehaviorSubject<ColorDetails>(
     this.colors[Color.DARK_RED]
   );

@@ -8,15 +8,7 @@
       <p class="h1 text-light-gray-blue">
         {{ timeLeft$ | async | timeFormat }}
       </p>
-      <div class="relative">
-        <control-button></control-button>
-        <div
-          *ngIf="(timerState$ | async) == timerStateRunning"
-          class="absolute right-[-30px] top-0 bottom-0 flex items-center"
-        >
-          <skip-button></skip-button>
-        </div>
-      </div>
+      <pomodoro-timer-buttons></pomodoro-timer-buttons>
     </div>
     <div class="absolute inset-0 grid place-items-center">
       <circular-progress-bar

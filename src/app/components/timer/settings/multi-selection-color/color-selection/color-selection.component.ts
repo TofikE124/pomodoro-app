@@ -1,8 +1,8 @@
 import { NgClass, NgIf, NgStyle } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconType } from '../../../../../constants/icons';
-import { ColorDetails } from '../../../../../services/color.service';
 import { SmallIconComponent } from '../../../../small-icon/small-icon.component';
+import { ColorDetails } from '../../../../../constants/colors';
 
 @Component({
   selector: 'color-selection',
