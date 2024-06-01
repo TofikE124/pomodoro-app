@@ -14,7 +14,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
   DropdownOptionComponent,
-  Option,
+  DropdownOption,
 } from './dropdown-option/dropdown-option.component';
 
 @Component({
@@ -40,7 +40,7 @@ export class DropdownComponent implements ControlValueAccessor, AfterViewInit {
   @Input() value: string | number | null = null;
   @Input('small') small: boolean = false;
 
-  @Input('options') options: Option[] = [];
+  @Input('options') options: DropdownOption[] = [];
 
   @Output('valueChange') valueChange: EventEmitter<string | number | null> =
     new EventEmitter();

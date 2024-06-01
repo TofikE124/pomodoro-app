@@ -10,7 +10,7 @@
     <div class="flex gap-4 items-center">
       <p class="body-1 text-dark-navy w-5">{{ volume$ | async }}</p>
       <slider
-        [value]="(volume$ | async) || 50"
+        [value]="(volume$ | async)!"
         [min]="0"
         [max]="100"
         (valueChange)="volumeValueChange($event)"

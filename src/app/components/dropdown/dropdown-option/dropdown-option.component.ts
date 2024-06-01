@@ -7,7 +7,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-export interface Option {
+export interface DropdownOption {
   label: string;
   value: string | number | null;
 }

@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ClockTickingSoundService } from '../../../../../services/audio/clock-ticking-sound.service';
-import { Option } from '../../../../dropdown/dropdown-option/dropdown-option.component';
+import { DropdownOption } from '../../../../dropdown/dropdown-option/dropdown-option.component';
 import { DropdownComponent } from '../../../../dropdown/dropdown.component';
 import {
-  clockTickingMap,
-  ClockTickingType,
+  ClockTickingSoundType,
+  clockTickingSoundsMap,
 } from './../../../../../constants/sounds';
 import { SettingsService } from './../../../../../services/settings.service';
 import { SliderComponent } from '../../../../slider/slider.component';
@@ -30,16 +30,16 @@ export class TickingSoundComponent {
 
   value: string = '';
 
-  options: Option[] = [
+  options: DropdownOption[] = [
     { label: 'None', value: null },
-    ...Object.entries(clockTickingMap).map(([type, obj]) => ({
+    ...Object.entries(clockTickingSoundsMap).map(([type, obj]) => ({
       label: obj.label,
       value: type,
     })),
   ];
 
   dropDownValueChange(value: string | number | null) {
-    this.settingsService.setTickingSound(value as ClockTickingType);
+    this.settingsService.setTickingSound(value as ClockTickingSoundType);
   }
   volumeValueChange(value: number) {
     this.settingsService.setTickingSoundVolume(value);

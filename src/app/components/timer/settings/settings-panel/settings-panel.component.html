@@ -1,5 +1,5 @@
 <div
-  class="settings-panel fixed lgmd:inset-0 sm:left-6 sm:right-6 sm:top-12 sm:bottom-16 grid place-items-center z-30"
+  class="settings-panel fixed lgmd:inset-0 sm:left-6 sm:right-6 sm:top-12 sm:bottom-16 grid justify-center pt-6 pb-12 overflow-y-scroll z-30"
   [ngClass]="{ opened: isSettingsOpened, closed: !isSettingsOpened }"
 >
   <div
@@ -56,7 +56,7 @@
     </div>
   </div>
   <div
-    class="settings-panel-overlay w-full h-full absolute inset-0 bg-[rgba(10,12,28,0.5)]"
+    class="settings-panel-overlay w-full h-full fixed inset-0 bg-[rgba(10,12,28,0.5)]"
     (click)="overlayClick.emit()"
   ></div>
 </div>

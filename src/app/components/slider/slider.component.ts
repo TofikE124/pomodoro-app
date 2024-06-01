@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 export class SliderComponent {
   @Input('min') min: number = 0;
   @Input('max') max: number = 100;
-  @Input('value') value: number = 50;
+  @Input('value') value?: number;
 
   @Output('valueChange') valueChange: EventEmitter<number> = new EventEmitter();
 

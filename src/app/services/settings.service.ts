@@ -1,4 +1,4 @@
-import { ClockTickingType, SoundDetails } from './../constants/sounds';
+import { BackgroundSoundService } from './audio/background-sound.service';
 import { Injectable } from '@angular/core';
 import { Font, FontService } from './font.service';
 import { TimerDurationService } from './timer-duration.service';
@@ -7,6 +7,10 @@ import { PomodoroCycleService } from './pomodoro-cycle.service';
 import { ColorDetails } from '../constants/colors';
 import { ColorService } from './color.service';
 import { ClockTickingSoundService } from './audio/clock-ticking-sound.service';
+import {
+  BackgroundSoundType,
+  ClockTickingSoundType,
+} from '../constants/sounds';
 
 export interface SaveableService {
   save: () => void;
@@ -23,7 +27,8 @@ export class SettingsService {
     private fontService: FontService,
     private timerDurationService: TimerDurationService,
     private pomodoroCycleService: PomodoroCycleService,
-    private clockTickingSoundService: ClockTickingSoundService
+    private clockTickingSoundService: ClockTickingSoundService,
+    private backgroundSoundService: BackgroundSoundService
   ) {
     this.servicesToSave = [
       colorService,
@@ -31,6 +36,7 @@ export class SettingsService {
       timerDurationService,
       pomodoroCycleService,
       clockTickingSoundService,
+      backgroundSoundService,
     ];
   }
 
@@ -56,11 +62,18 @@ export class SettingsService {
     this.pomodoroCycleService.setAutoStartBreaks(autoStart);
   }
 
-  setTickingSound(tickingType: ClockTickingType) {
-    this.clockTickingSoundService.setSound(tickingType);
+  setTickingSound(tickingSoundType: ClockTickingSoundType) {
+    this.clockTickingSoundService.setSound(tickingSoundType);
   }
   setTickingSoundVolume(volume: number) {
     this.clockTickingSoundService.setVolume(volume);
+  }
+
+  setBackgroundSound(backgroundSoundType: BackgroundSoundType) {
+    this.backgroundSoundService.setSound(backgroundSoundType);
+  }
+  setBackgroundSoundVolume(volume: number) {
+    this.backgroundSoundService.setVolume(volume);
   }
 
   save() {

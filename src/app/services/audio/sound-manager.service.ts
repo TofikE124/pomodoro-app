@@ -1,129 +1,108 @@
+import { SaveableService } from './../settings.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import {
-  defaultSoundSettings,
-  SoundDetails,
-  SoundSettings,
-  SoundType,
-} from '../../constants/sounds';
-import { LocalStorageService } from '../local-storage.service';
+import { distinctUntilChanged, map, Observable, skip } from 'rxjs';
+import { SoundDetails, SoundSettings, SoundType } from '../../constants/sounds';
 import { TimerService, TimerState } from '../timer.service';
 import { AudioService } from './audio.service';
+import { SoundSettingsService } from './sound-settings.service';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export abstract class SoundManagerService {
-  protected readonly STORAGE_KEY = 'soundSettings';
-  soundSettingsSubject: BehaviorSubject<SoundSettings> =
-    new BehaviorSubject<SoundSettings>(defaultSoundSettings);
-  soundSettings$ = this.soundSettingsSubject.asObservable();
+export abstract class SoundManagerService<T extends SoundType>
+  extends SoundSettingsService<T>
+  implements SaveableService
+{
+  volume$: Observable<number> = this.soundSetting$.pipe(
+    map((setting) => setting.volume),
+    distinctUntilChanged()
+  );
 
-  // true if the playCheck is true
+  soundType$: Observable<any | null> = this.soundSetting$.pipe(
+    map((setting, index) => setting.details?.type || null),
+    distinctUntilChanged()
+  );
+
+  protected testSoundDuration = 2000;
+
   protected isActive: boolean = false;
 
   constructor(
-    private localStorageService: LocalStorageService,
     private audioService: AudioService,
-    timerService: TimerService
+    private timerService: TimerService,
+    localStorageService: LocalStorageService
   ) {
-    this.initializeSoundSettings();
+    super(localStorageService);
 
     timerService.timerState$.subscribe((timerState) => {
-      if (this.playCheck(timerState)) {
-        this.isActive = true;
-        this.playSoundRepeatdly();
-      }
-      if (this.stopCheck(timerState)) {
-        this.isActive = false;
-        this.pauseSound();
-      }
+      if (this.playCheck(timerState)) this.playSoundRepeatdly();
+      if (this.stopCheck(timerState)) this.pauseSound();
     });
+
+    this.volume$
+      .pipe(skip(1))
+      .subscribe((volume) => this.onVolumeChange(volume));
+
+    this.soundType$.pipe(skip(1)).subscribe((type) => this.onTypeChange());
   }
 
   protected abstract playCheck(timerState: TimerState): boolean;
 
   protected abstract stopCheck(timerState: TimerState): boolean;
 
-  private initializeSoundSettings() {
-    const storedSoundSettings = this.getStoredSoundSettings();
-    if (storedSoundSettings) {
-      this.soundSettingsSubject.next(storedSoundSettings);
-    }
+  protected setGenericSound(soundDetails: SoundDetails, volume?: number) {
+    const currentSound = this.getSound();
+    this.updateSoundSetting({
+      details: soundDetails,
+      volume: volume ?? currentSound.volume,
+    });
   }
 
-  protected abstract getSound(): {
-    details: SoundDetails | null;
-    volume: number;
-  };
-
-  protected setGenericSound(
-    soundDetails: SoundDetails,
-    soundType: SoundType,
-    volume?: number
-  ) {
-    const currentSettings = this.soundSettingsSubject.value;
-    const updatedSettings: SoundSettings = {
-      ...currentSettings,
-      [soundType]: {
-        details: soundDetails,
-        volume: volume ?? currentSettings[soundType].volume,
-      },
-    };
-    this.soundSettingsSubject.next(updatedSettings);
-  }
-
-  protected setGenericSoundVolume(soundType: SoundType, volume?: number) {
-    const currentSettings = this.soundSettingsSubject.value;
-    const updatedSettings: SoundSettings = {
-      ...currentSettings,
-      [soundType]: {
-        ...currentSettings[soundType],
-        volume: volume,
-      },
-    };
-    this.soundSettingsSubject.next(updatedSettings);
+  setVolume(volume: number) {
+    const currentSound = this.getSound();
+    this.updateSoundSetting({ ...currentSound, volume });
   }
 
   abstract setSound(soundDetails: any, volume?: number): any;
-  abstract setVolume(volume: number): any;
 
   protected playSoundRepeatdly() {
-    const tickingSound = this.getSound();
-    if (!tickingSound.details) return;
-    const { url } = tickingSound.details;
-    const { volume } = tickingSound;
-    this.audioService.playSoundRepeatedly(url, volume);
+    const sound = this.getSound();
+    if (!sound.details) return;
+    this.isActive = true;
+    const { url } = sound.details;
+    const { volume } = sound;
+    this.audioService.playSoundRepeatedly(url, volume, this.getSoundType());
   }
 
   protected playSoundDuration(duration: number) {
-    const tickingSound = this.getSound();
-    if (!tickingSound.details) return;
-    const { url } = tickingSound.details;
-    const { volume } = tickingSound;
-    this.audioService.playSoundDuration(url, duration, volume);
-  }
-
-  protected pauseSound() {
-    this.audioService.pauseSound();
-  }
-
-  private getStoredSoundSettings(): SoundSettings | null {
-    const storedValue = this.localStorageService.get(this.STORAGE_KEY);
-    return storedValue ? JSON.parse(storedValue) : null;
-  }
-
-  private saveSoundSettingsToLocalStorage(soundSettings: SoundSettings) {
-    this.localStorageService.set(
-      this.STORAGE_KEY,
-      JSON.stringify(soundSettings)
+    const sound = this.getSound();
+    if (!sound.details) return;
+    const { url } = sound.details;
+    const { volume } = sound;
+    this.audioService.playSoundDuration(
+      url,
+      duration,
+      volume,
+      this.getSoundType()
     );
   }
 
-  save() {
-    const currentSettings = this.soundSettingsSubject.value;
-    if (currentSettings) {
-      this.saveSoundSettingsToLocalStorage(currentSettings);
+  protected pauseSound() {
+    this.isActive = false;
+    this.audioService.pauseSound(this.getURL());
+  }
+
+  protected onVolumeChange(volume: number) {
+    if (this.audioService.isPlaying && this.isActive)
+      this.audioService.setVolume(this.getURL(), volume);
+    else {
+      if (this.isActive) this.playSoundRepeatdly();
+      else this.playSoundDuration(this.testSoundDuration);
     }
+  }
+  protected onTypeChange() {
+    if (this.isActive) this.playSoundRepeatdly();
+    else this.playSoundDuration(this.testSoundDuration);
   }
 }
