@@ -8,9 +8,11 @@ import { ColorDetails } from '../constants/colors';
 import { ColorService } from './color.service';
 import { ClockTickingSoundService } from './audio/clock-ticking-sound.service';
 import {
+  AlarmSoundType,
   BackgroundSoundType,
   ClockTickingSoundType,
 } from '../constants/sounds';
+import { AlarmSoundService } from './audio/alarm-sound.service';
 
 export interface SaveableService {
   save: () => void;
@@ -28,7 +30,8 @@ export class SettingsService {
     private timerDurationService: TimerDurationService,
     private pomodoroCycleService: PomodoroCycleService,
     private clockTickingSoundService: ClockTickingSoundService,
-    private backgroundSoundService: BackgroundSoundService
+    private backgroundSoundService: BackgroundSoundService,
+    private alarmSoundService: AlarmSoundService
   ) {
     this.servicesToSave = [
       colorService,
@@ -37,6 +40,7 @@ export class SettingsService {
       pomodoroCycleService,
       clockTickingSoundService,
       backgroundSoundService,
+      alarmSoundService,
     ];
   }
 
@@ -74,6 +78,13 @@ export class SettingsService {
   }
   setBackgroundSoundVolume(volume: number) {
     this.backgroundSoundService.setVolume(volume);
+  }
+
+  setAlarmSound(alarmSoundType: AlarmSoundType) {
+    this.alarmSoundService.setSound(alarmSoundType);
+  }
+  setAlarmSoundVolume(volume: number) {
+    this.alarmSoundService.setVolume(volume);
   }
 
   save() {

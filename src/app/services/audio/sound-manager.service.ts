@@ -36,7 +36,10 @@ export abstract class SoundManagerService<T extends SoundType>
     super(localStorageService);
 
     timerService.timerState$.subscribe((timerState) => {
-      if (this.playCheck(timerState)) this.playSoundRepeatdly();
+      const playCheck = this.playCheck(timerState);
+      if (playCheck.play && playCheck.loop) this.playSoundRepeatdly();
+      if (playCheck.play && !playCheck.loop)
+        this.playSoundDuration(playCheck.duration!);
       if (this.stopCheck(timerState)) this.pauseSound();
     });
 
@@ -47,7 +50,11 @@ export abstract class SoundManagerService<T extends SoundType>
     this.soundType$.pipe(skip(1)).subscribe((type) => this.onTypeChange());
   }
 
-  protected abstract playCheck(timerState: TimerState): boolean;
+  protected abstract playCheck(timerState: TimerState): {
+    play: boolean;
+    duration?: number;
+    loop: boolean;
+  };
 
   protected abstract stopCheck(timerState: TimerState): boolean;
 

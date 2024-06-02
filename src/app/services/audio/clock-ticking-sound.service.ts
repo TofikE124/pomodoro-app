@@ -14,10 +14,14 @@ export class ClockTickingSoundService extends SoundManagerService<SoundType.TICK
   protected override getSoundType(): any {
     return SoundType.TICKING_SOUND;
   }
-
-  protected override playCheck(timerState: TimerState): boolean {
-    return timerState == TimerState.RUNNING;
+  protected override playCheck(timerState: TimerState): {
+    play: boolean;
+    duration?: number | undefined;
+    loop: boolean;
+  } {
+    return { play: timerState == TimerState.RUNNING, loop: true };
   }
+
   protected override stopCheck(timerState: TimerState): boolean {
     return timerState == TimerState.PAUSED;
   }

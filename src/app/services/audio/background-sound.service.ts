@@ -16,9 +16,14 @@ export class BackgroundSoundService extends SoundManagerService<SoundType.BACKGR
     return SoundType.BACKGROUND_SOUND;
   }
 
-  protected override playCheck(timerState: TimerState): boolean {
-    return timerState == TimerState.RUNNING;
+  protected override playCheck(timerState: TimerState): {
+    play: boolean;
+    duration?: number | undefined;
+    loop: boolean;
+  } {
+    return { play: timerState == TimerState.RUNNING, loop: true };
   }
+
   protected override stopCheck(timerState: TimerState): boolean {
     return timerState == TimerState.PAUSED;
   }

@@ -13,28 +13,13 @@ export interface SoundSetting {
 export type SoundCategoryType =
   | ClockTickingSoundType
   | BackgroundSoundType
-  | null;
+  | AlarmSoundType;
 
 export interface SoundDetails {
   label: string;
   url: string;
   type: SoundCategoryType;
 }
-
-export const defaultSoundSettings: SoundSettings = {
-  [SoundType.TICKING_SOUND]: {
-    details: null,
-    volume: 50,
-  },
-  [SoundType.ALARM_SOUND]: {
-    details: null,
-    volume: 50,
-  },
-  [SoundType.BACKGROUND_SOUND]: {
-    details: null,
-    volume: 50,
-  },
-};
 
 // Clock Ticking
 export enum ClockTickingSoundType {
@@ -101,15 +86,49 @@ export const backgroundSoundsMap: Record<BackgroundSoundType, SoundDetails> = {
   },
 };
 
-// export function getSoundCategoryType(soundType: SoundType) {
-//   switch (soundType) {
-//     case SoundType.TICKING_SOUND:
-//       return ClockTickingSoundType;
-//     case SoundType.BACKGROUND_SOUND:
-//       return BackgroundSoundType;
-//     case SoundType.ALARM_SOUND:
-//       return null;
-//     default:
-//       throw new Error(`Invalid sound type: ${soundType}`);
-//   }
-// }
+// Background Sounds
+export enum AlarmSoundType {
+  BIRD = 'Bird',
+  DIGITAL = 'Digital',
+  SCHOOL_BELL = 'School Bell',
+  WOOD = 'Wood',
+}
+
+export const alarmSoundMap: Record<AlarmSoundType, SoundDetails> = {
+  [AlarmSoundType.BIRD]: {
+    label: 'Bird',
+    url: '/assets/sounds/alarm/alarm-bird.mp3',
+    type: AlarmSoundType.BIRD,
+  },
+  [AlarmSoundType.DIGITAL]: {
+    label: 'Digital',
+    url: '/assets/sounds/alarm/alarm-digital.mp3',
+    type: AlarmSoundType.DIGITAL,
+  },
+  [AlarmSoundType.SCHOOL_BELL]: {
+    label: 'School Bell',
+    url: '/assets/sounds/alarm/alarm-school-bell.mp3',
+    type: AlarmSoundType.SCHOOL_BELL,
+  },
+  [AlarmSoundType.WOOD]: {
+    label: 'Wood',
+    url: '/assets/sounds/alarm/alarm-wood.mp3',
+    type: AlarmSoundType.WOOD,
+  },
+};
+
+// Default Values
+export const defaultSoundSettings: SoundSettings = {
+  [SoundType.TICKING_SOUND]: {
+    details: null,
+    volume: 50,
+  },
+  [SoundType.ALARM_SOUND]: {
+    details: alarmSoundMap[AlarmSoundType.DIGITAL],
+    volume: 50,
+  },
+  [SoundType.BACKGROUND_SOUND]: {
+    details: null,
+    volume: 50,
+  },
+};
