@@ -1,20 +1,8 @@
-<div class="flex justify-between items-center">
-  <p class="text-dark-navy text-xs font-bold opacity-40">Background Sound</p>
-  <div class="flex flex-col gap-2">
-    <dropdown
-      [options]="options"
-      placeholder="None"
-      (valueChange)="dropDownValueChange($event)"
-      [value]="soundType$ | async"
-    ></dropdown>
-    <div class="flex gap-4 items-center">
-      <p class="body-1 text-dark-navy w-5">{{ volume$ | async }}</p>
-      <slider
-        [value]="(volume$ | async)!"
-        [min]="0"
-        [max]="100"
-        (valueChange)="volumeValueChange($event)"
-      ></slider>
-    </div>
-  </div>
-</div>
+<sound-options
+  label="Background Sound"
+  [options]="options"
+  [value]="soundType$ | async"
+  [volume]="(volume$ | async)!"
+  (volumeChange)="volumeValueChange($event)"
+  (dropDownValueChange)="typeChange($event)"
+></sound-options>

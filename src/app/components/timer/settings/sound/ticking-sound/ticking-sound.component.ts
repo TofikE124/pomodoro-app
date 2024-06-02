@@ -2,18 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ClockTickingSoundService } from '../../../../../services/audio/clock-ticking-sound.service';
 import { DropdownOption } from '../../../../dropdown/dropdown-option/dropdown-option.component';
-import { DropdownComponent } from '../../../../dropdown/dropdown.component';
+import { SoundOptionsComponent } from '../sound-options/sound-options.component';
 import {
   ClockTickingSoundType,
   clockTickingSoundsMap,
 } from './../../../../../constants/sounds';
 import { SettingsService } from './../../../../../services/settings.service';
-import { SliderComponent } from '../../../../slider/slider.component';
 
 @Component({
   selector: 'ticking-sound',
   standalone: true,
-  imports: [DropdownComponent, SliderComponent, CommonModule],
+  imports: [SoundOptionsComponent, CommonModule],
   templateUrl: './ticking-sound.component.html',
   styleUrl: './ticking-sound.component.scss',
 })
@@ -38,7 +37,7 @@ export class TickingSoundComponent {
     })),
   ];
 
-  dropDownValueChange(value: string | number | null) {
+  typeChange(value: string | number | null) {
     this.settingsService.setTickingSound(value as ClockTickingSoundType);
   }
   volumeValueChange(value: number) {

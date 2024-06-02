@@ -1,0 +1,20 @@
+<div class="flex justify-between items-center">
+  <p class="text-dark-navy text-xs font-bold opacity-40">{{ label }}</p>
+  <div class="flex flex-col gap-2">
+    <dropdown
+      [options]="options"
+      placeholder="None"
+      (valueChange)="onDropDownValueChange($event)"
+      [value]="value"
+    ></dropdown>
+    <div class="flex gap-4 items-center">
+      <p class="body-1 text-dark-navy w-5">{{ volume }}</p>
+      <slider
+        [value]="volume"
+        [min]="0"
+        [max]="100"
+        (valueChange)="volumeValueChange($event)"
+      ></slider>
+    </div>
+  </div>
+</div>

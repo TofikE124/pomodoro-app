@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { SettingsService } from '../../../../../services/settings.service';
 import { DropdownOption } from '../../../../dropdown/dropdown-option/dropdown-option.component';
-import { DropdownComponent } from '../../../../dropdown/dropdown.component';
-import { SliderComponent } from '../../../../slider/slider.component';
+import { SoundOptionsComponent } from '../sound-options/sound-options.component';
 import {
   backgroundSoundsMap,
   BackgroundSoundType,
@@ -13,7 +12,7 @@ import { BackgroundSoundService } from './../../../../../services/audio/backgrou
 @Component({
   selector: 'background-sound',
   standalone: true,
-  imports: [DropdownComponent, SliderComponent, CommonModule],
+  imports: [SoundOptionsComponent, CommonModule],
   templateUrl: './background-sound.component.html',
   styleUrl: './background-sound.component.scss',
 })
@@ -28,8 +27,6 @@ export class BackgroundSoundComponent {
     this.volume$ = backgroundSoundService.volume$;
   }
 
-  value: string = '';
-
   options: DropdownOption[] = [
     { label: 'None', value: null },
     ...Object.entries(backgroundSoundsMap).map(([type, obj]) => ({
@@ -38,7 +35,7 @@ export class BackgroundSoundComponent {
     })),
   ];
 
-  dropDownValueChange(value: string | number | null) {
+  typeChange(value: string | number | null) {
     this.settingsService.setBackgroundSound(value as BackgroundSoundType);
   }
   volumeValueChange(value: number) {
