@@ -4,9 +4,9 @@ import {
   PomodoroMode,
   PomodoroModeDetails,
   pomodoroModeDetailsMap,
-} from '../constants/modes';
-import { SaveableService } from './settings.service';
-import { LocalStorageService } from './local-storage.service';
+} from '../../constants/modes';
+import { SaveableService } from '../settings.service';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root',

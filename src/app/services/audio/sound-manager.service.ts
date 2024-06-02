@@ -2,7 +2,7 @@ import { SaveableService } from './../settings.service';
 import { Injectable } from '@angular/core';
 import { distinctUntilChanged, map, Observable, skip } from 'rxjs';
 import { SoundDetails, SoundSettings, SoundType } from '../../constants/sounds';
-import { TimerService, TimerState } from '../timer.service';
+import { TimerService, TimerState } from '../timer/timer.service';
 import { AudioService } from './audio.service';
 import { SoundSettingsService } from './sound-settings.service';
 import { LocalStorageService } from '../local-storage.service';

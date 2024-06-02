@@ -4,7 +4,7 @@ import {
   ClockTickingSoundType,
   SoundType,
 } from '../../constants/sounds';
-import { TimerState } from '../timer.service';
+import { TimerState } from '../timer/timer.service';
 import { SoundManagerService } from './sound-manager.service';
 
 @Injectable({

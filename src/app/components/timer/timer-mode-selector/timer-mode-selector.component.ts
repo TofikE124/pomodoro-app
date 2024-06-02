@@ -2,7 +2,7 @@ import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PomodoroMode } from '../../../constants/modes';
-import { TimerModeService } from './../../../services/timer-mode.service';
+import { TimerModeService } from '../../../services/timer/timer-mode.service';
 import { TimerModeSelectionComponent } from './timer-mode-selection/timer-mode-selection.component';
 
 @Component({

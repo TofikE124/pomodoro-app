@@ -1,7 +1,10 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TimerService, TimerState } from '../../../../services/timer.service';
+import {
+  TimerService,
+  TimerState,
+} from '../../../../services/timer/timer.service';
 import { ControlButtonComponent } from '../control-button/control-button.component';
 import { SkipButtonComponent } from '../skip-button/skip-button.component';
 

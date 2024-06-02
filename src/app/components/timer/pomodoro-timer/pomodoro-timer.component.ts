@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { TimeFormatPipe } from '../../../pipes/time-format.pipe';
-import { TimerService } from '../../../services/timer.service';
+import { TimerService } from '../../../services/timer/timer.service';
 import { CircularProgressBarComponent } from '../../circular-progress-bar/circular-progress-bar.component';
 import { PomodoroTimerButtonsComponent } from './pomodoro-timer-buttons/pomodoro-timer-buttons.component';
 import { AudioService } from '../../../services/audio/audio.service';

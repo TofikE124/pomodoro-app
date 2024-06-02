@@ -1,4 +1,4 @@
-import { TimerDurationService } from './../../../../services/timer-duration.service';
+import { TimerDurationService } from '../../../../services/timer/timer-duration.service';
 import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PomodoroModeDetails, PomodoroMode } from '../../../../constants/modes';

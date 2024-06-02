@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  interval,
+  Observable,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PomodoroModeDetails } from '../constants/modes';
-import { PomodoroCycleService } from './pomodoro-cycle.service';
+import { PomodoroMode, PomodoroModeDetails } from '../../constants/modes';
+import { PomodoroCycleService } from '../pomodoro-cycle.service';
 import { TimerDurationService } from './timer-duration.service';
 import { TimerModeService } from './timer-mode.service';
 
@@ -29,6 +35,10 @@ export class TimerService {
   timeLeft$ = this.timeLeftSubject.asObservable();
   progress$ = this.progressSubject.asObservable();
   timerState$: Observable<TimerState> = this.timerStateSubject.asObservable();
+
+  private timerCompletesSubject = new Subject<PomodoroMode>();
+  timerCompletes$: Observable<PomodoroMode> =
+    this.timerCompletesSubject.asObservable();
 
   private timerSubscription?: Subscription;
   private currentModeDetails?: PomodoroModeDetails;
@@ -106,6 +116,7 @@ export class TimerService {
   private timerCompleted() {
     this.timerStateSubject.next(TimerState.COMPLETED);
     this.timerModeService.nextMode();
+    this.timerCompletesSubject.next(this.timerModeService.getCurrentMode());
     this.checkStartTimer();
   }
 

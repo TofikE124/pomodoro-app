@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SoundType } from '../../constants/sounds';
-import { TimerState } from '../timer.service';
+import { TimerState } from '../timer/timer.service';
 import { alarmSoundMap, AlarmSoundType } from './../../constants/sounds';
 import { SoundManagerService } from './sound-manager.service';
 

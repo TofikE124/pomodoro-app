@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SmallIconComponent } from '../../../small-icon/small-icon.component';
 import { IconType } from '../../../../constants/icons';
-import { TimerModeService } from '../../../../services/timer-mode.service';
+import { TimerModeService } from '../../../../services/timer/timer-mode.service';
 import { KeyboardService } from '../../../../services/keyboard.service';
 
 @Component({

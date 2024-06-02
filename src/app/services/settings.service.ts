@@ -1,7 +1,7 @@
 import { BackgroundSoundService } from './audio/background-sound.service';
 import { Injectable } from '@angular/core';
 import { Font, FontService } from './font.service';
-import { TimerDurationService } from './timer-duration.service';
+import { TimerDurationService } from './timer/timer-duration.service';
 import { PomodoroMode } from '../constants/modes';
 import { PomodoroCycleService } from './pomodoro-cycle.service';
 import { ColorDetails } from '../constants/colors';
@@ -13,6 +13,7 @@ import {
   ClockTickingSoundType,
 } from '../constants/sounds';
 import { AlarmSoundService } from './audio/alarm-sound.service';
+import { TimerNotificationsService } from './timer/timer-notifications.service';
 
 export interface SaveableService {
   save: () => void;
@@ -31,7 +32,8 @@ export class SettingsService {
     private pomodoroCycleService: PomodoroCycleService,
     private clockTickingSoundService: ClockTickingSoundService,
     private backgroundSoundService: BackgroundSoundService,
-    private alarmSoundService: AlarmSoundService
+    private alarmSoundService: AlarmSoundService,
+    private timerNotificationsService: TimerNotificationsService
   ) {
     this.servicesToSave = [
       colorService,

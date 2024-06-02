@@ -5,7 +5,7 @@ import {
   BackgroundSoundType,
   SoundType,
 } from '../../constants/sounds';
-import { TimerState } from '../timer.service';
+import { TimerState } from '../timer/timer.service';
 
 @Injectable({
   providedIn: 'root',
