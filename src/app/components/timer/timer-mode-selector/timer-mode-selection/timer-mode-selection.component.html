@@ -1,13 +1,13 @@
 <div
   *ngIf="mode !== undefined"
-  class="w-fit px-6 py-4 rounded-[26.5px] active:translate-y-[3px] cursor-pointer transition-[opacity,backgroundColor] duration-300 ease-in"
+  class="w-fit lgmd:px-6 sm:px-4 py-4 rounded-[26.5px] active:translate-y-[3px] cursor-pointer transition-[opacity,backgroundColor] duration-300 ease-in"
   [ngClass]="{
     'bg-scheme-color text-dark-navy': selected,
     'text-light-gray-blue opacity-40 hover:opacity-100': !selected
   }"
   (click)="modeSelect.emit(mode)"
 >
-  <p class="text -sm font-bold">
+  <p class="text-sm font-bold text-nowrap">
     {{ modeDetails?.label }}
   </p>
 </div>

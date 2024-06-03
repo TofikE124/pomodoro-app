@@ -1,5 +1,5 @@
 <div
-  class="pomodoro-timer-container overflow-hidden w-[450px] h-[450px] rounded-full p-[22px]"
+  class="pomodoro-timer-container overflow-hidden w-[450px] h-[450px] sm:w-[300px] sm:h-[300px] rounded-full p-[22px]"
 >
   <div class="relative bg-very-dark-navy rounded-full p-[13.5px] w-full h-full">
     <div
@@ -11,13 +11,24 @@
       <pomodoro-timer-buttons></pomodoro-timer-buttons>
     </div>
     <div class="absolute inset-0 grid place-items-center">
-      <circular-progress-bar
-        [height]="379"
-        [width]="379"
-        [stroke-width]="11"
-        stroke-color="var(--schemeColor)"
-        [progress]="(progress$ | async)!"
-      ></circular-progress-bar>
+      <div class="sm:hidden">
+        <circular-progress-bar
+          [height]="379"
+          [width]="379"
+          [stroke-width]="11"
+          stroke-color="var(--schemeColor)"
+          [progress]="(progress$ | async)!"
+        ></circular-progress-bar>
+      </div>
+      <div class="lgmd:hidden">
+        <circular-progress-bar
+          [height]="229"
+          [width]="229"
+          [stroke-width]="7"
+          stroke-color="var(--schemeColor)"
+          [progress]="(progress$ | async)!"
+        ></circular-progress-bar>
+      </div>
     </div>
   </div>
 </div>

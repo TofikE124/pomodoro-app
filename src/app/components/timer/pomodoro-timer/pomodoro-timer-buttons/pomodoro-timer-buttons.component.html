@@ -1,8 +1,8 @@
-<div class="relative select-none">
+<div class="relative select-none sm:flex-col">
   <control-button></control-button>
   <div
     *ngIf="(timerState$ | async) == timerStateRunning"
-    class="absolute right-[-30px] top-0 bottom-0 flex items-center"
+    class="lgmd:absolute right-[-30px] top-0 bottom-0 flex items-center w-fit sm:mx-auto sm:mt-2"
   >
     <skip-button></skip-button>
   </div>
