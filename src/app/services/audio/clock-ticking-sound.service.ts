@@ -23,7 +23,7 @@ export class ClockTickingSoundService extends SoundManagerService<SoundType.TICK
   }
 
   protected override stopCheck(timerState: TimerState): boolean {
-    return timerState == TimerState.PAUSED;
+    return timerState == TimerState.PAUSED || timerState == TimerState.IDLE;
   }
 
   override setSound(clockTickingType: ClockTickingSoundType, volume?: number) {

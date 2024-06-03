@@ -25,7 +25,7 @@ export class BackgroundSoundService extends SoundManagerService<SoundType.BACKGR
   }
 
   protected override stopCheck(timerState: TimerState): boolean {
-    return timerState == TimerState.PAUSED;
+    return timerState == TimerState.PAUSED || timerState == TimerState.IDLE;
   }
 
   override setSound(backgroundSoundType: BackgroundSoundType, volume?: number) {
