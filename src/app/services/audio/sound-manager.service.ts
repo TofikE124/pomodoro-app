@@ -1,11 +1,11 @@
-import { SaveableService } from './../settings.service';
 import { Injectable } from '@angular/core';
 import { distinctUntilChanged, map, Observable, skip } from 'rxjs';
-import { SoundDetails, SoundSettings, SoundType } from '../../constants/sounds';
+import { SoundDetails, SoundType } from '../../constants/sounds';
+import { LocalStorageService } from '../local-storage.service';
 import { TimerService, TimerState } from '../timer/timer.service';
+import { SaveableService } from './../settings.service';
 import { AudioService } from './audio.service';
 import { SoundSettingsService } from './sound-settings.service';
-import { LocalStorageService } from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +20,7 @@ export abstract class SoundManagerService<T extends SoundType>
   );
 
   soundType$: Observable<any | null> = this.soundSetting$.pipe(
-    map((setting, index) => setting.details?.type || null),
-    distinctUntilChanged()
+    map((setting, index) => setting.details?.type || null)
   );
 
   protected testSoundDuration = 2000;
