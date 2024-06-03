@@ -1,9 +1,9 @@
-<div class="relative" [ngClass]="small ? 'w-[100px]' : 'w-[200px]'">
+<div class="relative" [ngClass]="small ? 'w-[100px]' : 'w-[220px]'">
   <div
     class="bg-off-white flex justify-between w-full py-4 px-6 rounded-[5px] shadow-[0px_2px_9px_0px_rgba(0, 0, 0, 0.05)] cursor-pointer z-20 relative"
     (click)="toggleDropdown()"
   >
-    <p class="caption text-dark">{{ value || placeholder }}</p>
+    <p class="caption text-dark text-nowrap">{{ value || placeholder }}</p>
 
     <img
       [src]="

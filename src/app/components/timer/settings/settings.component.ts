@@ -14,7 +14,7 @@ import { KeyboardService } from '../../../services/keyboard.service';
 export class SettingsComponent implements OnInit {
   settingsIcon = IconType.SETTINGS;
 
-  isSettingsOpen = true;
+  isSettingsOpen = false;
 
   constructor(private keyboardService: KeyboardService) {}
 

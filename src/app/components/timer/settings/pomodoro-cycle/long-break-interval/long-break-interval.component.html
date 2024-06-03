@@ -1,5 +1,7 @@
-<div class="flex justify-between items-center">
-  <p class="text-dark-navy text-xs font-bold opacity-40">Long Break Interval</p>
+<div class="flex justify-between items-center sm:gap-6">
+  <p class="text-dark-navy text-xs font-bold opacity-40 text-wrap">
+    Long Break Interval
+  </p>
   <number-input
     [min]="1"
     [value]="(longBreakInterval$ | async) || 1"
