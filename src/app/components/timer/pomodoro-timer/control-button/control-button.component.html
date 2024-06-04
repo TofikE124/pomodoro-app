@@ -1,7 +1,15 @@
-<button
-  class="h3 text-light-gray-blue cursor-pointer select-none outline-none"
-  [tabindex]="-1"
-  (click)="onClick($event)"
->
-  {{ currentControlButtonDetails?.label }}
-</button>
+<div>
+  <button
+    class="sm:hidden h3 text-light-gray-blue cursor-pointer select-none outline-none"
+    [tabindex]="-1"
+    (click)="onClick($event)"
+  >
+    {{ currentControlButtonDetails?.label }}
+  </button>
+  <button
+    class="lgmd:hidden h3 text-light-gray-blue cursor-pointer select-none outline-none"
+    (click)="currentControlButtonDetails?.onClick()"
+  >
+    {{ currentControlButtonDetails?.label }}
+  </button>
+</div>
