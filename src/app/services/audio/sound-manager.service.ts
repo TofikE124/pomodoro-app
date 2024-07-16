@@ -74,7 +74,10 @@ export abstract class SoundManagerService<T extends SoundType>
 
   protected playSoundRepeatdly() {
     const sound = this.getSound();
-    if (!sound.details) return;
+    if (!sound.details) {
+      this.audioService.pauseAllOfType(this.getSoundType());
+      return;
+    }
     this.isActive = true;
     const { url } = sound.details;
     const { volume } = sound;
