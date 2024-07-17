@@ -5,7 +5,7 @@ import { SoundType } from '../../constants/sounds';
   providedIn: 'root',
 })
 export class AudioService {
-  private audioMap: Map<string, { audio: HTMLAudioElement; type: SoundType }> =
+  private audioMap: Map<string, { audio: HTMLAudioElement; type?: SoundType }> =
     new Map();
   private playDurationTimeOutMap: Map<HTMLAudioElement, NodeJS.Timeout> =
     new Map();
@@ -14,7 +14,7 @@ export class AudioService {
 
   private getOrCreateAudio(
     filePath: string,
-    soundType: SoundType
+    soundType?: SoundType
   ): HTMLAudioElement {
     let audio = this.audioMap.get(filePath)?.audio;
     if (!audio) {
@@ -51,13 +51,21 @@ export class AudioService {
   playSoundRepeatedly(
     filePath: string,
     volume: number = 1,
-    soundType: SoundType
+    soundType?: SoundType
   ): void {
-    this.pauseAllOfType(soundType);
+    if (soundType) this.pauseAllOfType(soundType);
     const audio = this.getOrCreateAudio(filePath, soundType);
     audio.volume = volume / 100; // Volume is expected to be between 0-100
     audio.loop = true;
     audio.play();
+  }
+
+  playSound(filePath: string, volume: number = 100) {
+    const audio = this.getOrCreateAudio(filePath);
+    audio.volume = volume / 100; // Volume is expected to be between 0-100
+    if (audio.paused) {
+      audio.play();
+    }
   }
 
   pauseSound(filePath: string): void {

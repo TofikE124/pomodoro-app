@@ -52,7 +52,7 @@
 // Responsive styles for small devices
 @include sm() {
   .h1 {
-    font-size: 5rem; // 100px -> 80px
+    font-size: 4rem; // 100px -> 64px
   }
   .h2 {
     font-size: 1.75rem; // 28px -> 20px

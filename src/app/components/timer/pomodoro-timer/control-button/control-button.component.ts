@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { TimerButtonService } from '../../../../services/timer/timer-button.service';
 import { ControlButtonDetails } from '../../../../services/timer/timer.service';
 import { KeyboardService } from '../../../../services/keyboard.service';
+import { AudioService } from '../../../../services/audio/audio.service';
 
 @Component({
   selector: 'control-button',
@@ -18,7 +19,8 @@ export class ControlButtonComponent implements OnInit, OnDestroy {
 
   constructor(
     private timerButtonService: TimerButtonService,
-    private keyboardService: KeyboardService
+    private keyboardService: KeyboardService,
+    private audioService: AudioService
   ) {}
 
   ngOnInit(): void {
@@ -27,9 +29,10 @@ export class ControlButtonComponent implements OnInit, OnDestroy {
         (currentButtonDetails) =>
           (this.currentControlButtonDetails = currentButtonDetails)
       );
-    this.keyboardService.register(' ', () =>
-      this.currentControlButtonDetails?.onClick()
-    );
+    this.keyboardService.register(' ', () => {
+      this.currentControlButtonDetails?.onClick();
+      this.playClickSound();
+    });
   }
 
   ngOnDestroy(): void {
@@ -37,6 +40,13 @@ export class ControlButtonComponent implements OnInit, OnDestroy {
   }
 
   onClick(event: any) {
-    if (event.pointerType) this.currentControlButtonDetails?.onClick();
+    if (event.pointerType) {
+      this.currentControlButtonDetails?.onClick();
+      this.playClickSound();
+    }
+  }
+
+  playClickSound() {
+    this.audioService.playSound('/assets/sounds/other/button.wav', 100);
   }
 }
